@@ -6,7 +6,10 @@ import Inputs from './Inputs';
 import Footer from './Footer';
 import './App.css';
 
-import { CalendarContainer } from './styles';
+import {
+  CalendarContainer,
+  Navigation,
+} from './styles';
 
 import { DEPARTURE } from './constants';
 
@@ -28,18 +31,18 @@ class App extends Component {
   }
   nextMonth = (e) => {
     e.preventDefault();
-    const { currentDate } = this.state;
-    const nextMonth = currentDate.clone().add(1, 'month');
+    const { currentMonth } = this.state;
+    const nextMonth = currentMonth.clone().add(1, 'month');
     this.setState({
-      currentDate: nextMonth,
+      currentMonth: nextMonth,
     });
   }
   prevMonth = (e) => {
     e.preventDefault();
-    const { currentDate } = this.state;
-    const prevMonth = currentDate.clone().subtract(1, 'month');
+    const { currentMonth } = this.state;
+    const prevMonth = currentMonth.clone().subtract(1, 'month');
     this.setState({
-      currentDate: prevMonth,
+      currentMonth: prevMonth,
     });
   }
   changeSelectedType = (selectedType) => {
@@ -54,6 +57,12 @@ class App extends Component {
     const nextMonth = currentMonth.clone().add(1, 'month');
     return (
       <div className="App">
+        <Navigation onClick={this.prevMonth} left>
+          {'<'}
+        </Navigation>
+        <Navigation onClick={this.nextMonth}>
+          {'>'}
+        </Navigation>
         <Inputs
           selectedType={selectedType}
           departureDate={departureDate}
