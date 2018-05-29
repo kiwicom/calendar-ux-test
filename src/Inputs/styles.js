@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 10px;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #e8edf1;
 `;
 
 export const InputContainer = styled.div`
-    border: 1px solid grey;
-    padding: 5px;
-    display: grid;
-    grid-template-columns: auto auto;
+    cursor: pointer;
+    padding-bottom: 10px;
+    margin-right: 25px;
+    border-bottom: ${props => (props.active ? '3px solid #0176d2' : 'none')};
 `;

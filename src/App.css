@@ -1,4 +1,14 @@
 .App {
-  width: 700px;
+  width: 750px;
   margin: 0 auto;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px -5px #46515e;
+  padding: 15px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }

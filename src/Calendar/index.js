@@ -1,27 +1,29 @@
+/* @flow */
 import React, { Component } from 'react';
+import { Typography } from '@kiwicom/orbit-components';
 import {
   Container,
   DaysContainer,
   CalendarContainer,
   Day,
-  Title,
+  MonthButton,
+  MonthContainer,
 } from './styles';
 
-// type State = {
-//   dayInTheWeek: number,
-//   daysInMonth: number
-// }
+type State = {
+  dayInTheWeek: number,
+  daysInMonth: number
+}
+type Props = {
+  date: any
+}
 
-// type Props = {
-//     date: Object
-// }
-
-class Calendar extends Component {
+class Calendar extends Component<Props, State> {
   state = {
     dayInTheWeek: 0,
     daysInMonth: 0,
   }
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props: Props) {
     const { date } = props;
     const daysInMonth = date.daysInMonth();
     const dayInTheWeek = date.startOf('month').isoWeekday();
@@ -34,25 +36,43 @@ class Calendar extends Component {
     const { dayInTheWeek, daysInMonth } = this.state;
     return Array.from(Array(daysInMonth).keys())
       .map((item) => {
-        if (item === 0) {
-          return (<Day key={item} startAt={dayInTheWeek}>{item + 1}</Day>);
+        const price = Math.floor(Math.random() * 1000);
+        let type = 'active';
+        if (price > 400 && price < 700) {
+          type = 'secondary';
+        } else if (price > 700) {
+          type = 'error';
         }
-        return <Day key={item}>{item + 1}</Day>;
+        if (item === 0) {
+          return (
+            <Day key={item} startAt={dayInTheWeek}>
+              <Typography size="large">{item + 1}</Typography>
+            </Day>);
+        }
+        return (
+          <Day key={item}>
+            <Typography size="large">{item + 1}</Typography><br />
+            <Typography size="small" type={type}>${price}</Typography>
+          </Day>);
       });
   }
   render() {
     const title = this.props.date.format('MMMM YYYY');
     return (
       <Container>
-        <Title>{title}</Title>
+        <MonthContainer>
+          <MonthButton>
+            <Typography size="large">{title}</Typography>
+          </MonthButton>
+        </MonthContainer>
         <DaysContainer>
-          <Day>M</Day>
-          <Day>T</Day>
-          <Day>W</Day>
-          <Day>T</Day>
-          <Day>F</Day>
-          <Day>S</Day>
-          <Day>S</Day>
+          <Day><Typography size="small" type="secondary">M</Typography></Day>
+          <Day><Typography size="small" type="secondary">T</Typography></Day>
+          <Day><Typography size="small" type="secondary">W</Typography></Day>
+          <Day><Typography size="small" type="secondary">T</Typography></Day>
+          <Day><Typography size="small" type="secondary">F</Typography></Day>
+          <Day><Typography size="small" type="secondary">S</Typography></Day>
+          <Day><Typography size="small" type="secondary">S</Typography></Day>
         </DaysContainer>
         <CalendarContainer>
           {this.renderDays()}

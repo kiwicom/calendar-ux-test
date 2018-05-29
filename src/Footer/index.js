@@ -1,24 +1,27 @@
-import React, { Component } from "react";
+import React from 'react';
 import {
-    Button,
-    Typography
-} from "@kiwicom/orbit-components";
+  Button,
+  Typography,
+} from '@kiwicom/orbit-components';
 
-import {
-    Container
-} from "./styles";
+import { Container, Search, Desc } from './styles';
 
-class Footer extends Component {
-    render() {
-        return (
-            <Container>
-                <Typography size="small" type="attention" variant="bold">
-                    Pick a date of your return
-                </Typography>
-                <Button title="Search" onClick={() => {}} />
-            </Container>
-        )
-    }
-}
+const Footer = () =>
+  (
+    <Container>
+      <Typography size="small" type="secondary">
+          Pick a date of your return
+      </Typography>
+      <Search>
+        <Desc>
+          <Typography size="small" type="secondary">
+            Showing prices for Vienna -> Paris
+          </Typography>
+        </Desc>
+        <Button title="Search" onClick={() => {}} />
+      </Search>
+    </Container>
+  );
+
 
 export default Footer;

@@ -8,10 +8,23 @@
     "parser": "babel-eslint",
     "extends": [
       "airbnb",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      "plugin:flowtype/recommended"
     ],
     "rules": {
-      "react/jsx-filename-extension": ["error", { "extensions": [".js"] }]
-
+      "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+      "react/no-unused-prop-types": "off",
+      "flowtype/require-valid-file-annotation": [
+        "error",
+        "always"
+      ],
+      "flowtype/no-weak-types": [
+        "warn",
+        {
+          "any": false,
+          "Object": true,
+          "Function": true
+        }
+      ]
     }
   }
