@@ -1,23 +1,31 @@
-/* @flow */
 import React, { Component } from 'react';
-import { Container, CalendarContainer, Day, Title } from './styles';
+import {
+  Container,
+  DaysContainer,
+  CalendarContainer,
+  Day,
+  Title,
+} from './styles';
 
-type State = {
-  dayInTheWeek: number,
-  daysInMonth: number
-}
+// type State = {
+//   dayInTheWeek: number,
+//   daysInMonth: number
+// }
 
-type Props = {
-    date: Object
-}
+// type Props = {
+//     date: Object
+// }
 
-class Calendar extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    const { date } = this.props;
-    const daysInMonth = date.clone().daysInMonth();
-    const dayInTheWeek = date.clone().startOf('month').day();
-    this.state = {
+class Calendar extends Component {
+  state = {
+    dayInTheWeek: 0,
+    daysInMonth: 0,
+  }
+  static getDerivedStateFromProps(props) {
+    const { date } = props;
+    const daysInMonth = date.daysInMonth();
+    const dayInTheWeek = date.startOf('month').isoWeekday();
+    return {
       dayInTheWeek,
       daysInMonth,
     };
@@ -37,7 +45,7 @@ class Calendar extends Component<Props, State> {
     return (
       <Container>
         <Title>{title}</Title>
-        <CalendarContainer>
+        <DaysContainer>
           <Day>M</Day>
           <Day>T</Day>
           <Day>W</Day>
@@ -45,7 +53,7 @@ class Calendar extends Component<Props, State> {
           <Day>F</Day>
           <Day>S</Day>
           <Day>S</Day>
-        </CalendarContainer>
+        </DaysContainer>
         <CalendarContainer>
           {this.renderDays()}
         </CalendarContainer>

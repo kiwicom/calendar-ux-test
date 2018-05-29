@@ -9,9 +9,16 @@ export const Title = styled.h3`
     font-size: 20px;
 `;
 
+export const DaysContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    grid-template-rows: 50px;
+`;
+
 export const CalendarContainer = styled.div`
-display: grid;
-grid-template-columns: 50px 50px 50px 50px 50px 50px 50px;
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    grid-template-rows: repeat(5, 50px)
 `;
 
 export const Day = styled.div`

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import Calendar from './Calendar';
-import Inputs from "./Inputs";
-import Footer from "./Footer"
+import Inputs from './Inputs';
+import Footer from './Footer';
 import './App.css';
 
-import {
-  CalendarContainer
-} from "./styles";
+import { CalendarContainer } from './styles';
 
 class App extends Component {
   constructor(props) {
@@ -16,17 +14,35 @@ class App extends Component {
       currentDate: moment(),
     };
   }
+  nextMonth = () => {
+    const { currentDate } = this.state;
+    const nextMonth = currentDate.clone().add(1, 'month');
+    this.setState({
+      currentDate: nextMonth,
+    });
+  }
+  prevMonth = () => {
+    const { currentDate } = this.state;
+    const prevMonth = currentDate.clone().subtract(1, 'month');
+    this.setState({
+      currentDate: prevMonth,
+    });
+  }
   render() {
     const { currentDate } = this.state;
     const nextMonth = currentDate.clone().add(1, 'month');
     return (
       <div className="App">
         <Inputs />
+        <div>
+          <p onClick={this.prevMonth}>Prev</p>
+          <p onClick={this.nextMonth}>Next</p>
+        </div>
         <CalendarContainer>
           <Calendar date={currentDate} />
           <Calendar date={nextMonth} />
         </CalendarContainer>
-        <Footer/>
+        <Footer />
       </div>
     );
   }

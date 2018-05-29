@@ -8,8 +8,7 @@
     "parser": "babel-eslint",
     "extends": [
       "airbnb",
-      "plugin:react/recommended",
-      "plugin:flowtype/recommended"
+      "plugin:react/recommended"
     ],
     "rules": {
       "react/jsx-filename-extension": ["error", { "extensions": [".js"] }]
