@@ -1,11 +1,20 @@
+/* @flow */
 import React, { Component } from 'react';
-import moment from 'moment';
-import { CalendarContainer, Day } from './styles';
+import { Container, CalendarContainer, Day, Title } from './styles';
 
-class Calendar extends Component {
-  constructor(props) {
+type State = {
+  dayInTheWeek: number,
+  daysInMonth: number
+}
+
+type Props = {
+    date: Object
+}
+
+class Calendar extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    const date = moment();
+    const { date } = this.props;
     const daysInMonth = date.clone().daysInMonth();
     const dayInTheWeek = date.clone().startOf('month').day();
     this.state = {
@@ -24,8 +33,10 @@ class Calendar extends Component {
       });
   }
   render() {
+    const title = this.props.date.format('MMMM YYYY');
     return (
-      <div>
+      <Container>
+        <Title>{title}</Title>
         <CalendarContainer>
           <Day>M</Day>
           <Day>T</Day>
@@ -38,7 +49,7 @@ class Calendar extends Component {
         <CalendarContainer>
           {this.renderDays()}
         </CalendarContainer>
-      </div>
+      </Container>
     );
   }
 }
