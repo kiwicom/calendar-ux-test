@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Calendar from './Calendar';
 import Inputs from "./Inputs";
-
+import Footer from "./Footer"
 import './App.css';
+
+import {
+  CalendarContainer
+} from "./styles";
 
 class App extends Component {
   constructor(props) {
@@ -18,8 +22,11 @@ class App extends Component {
     return (
       <div className="App">
         <Inputs />
-        <Calendar date={currentDate} />
-        <Calendar date={nextMonth} />
+        <CalendarContainer>
+          <Calendar date={currentDate} />
+          <Calendar date={nextMonth} />
+        </CalendarContainer>
+        <Footer/>
       </div>
     );
   }
