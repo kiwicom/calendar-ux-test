@@ -65,14 +65,27 @@ class App extends Component<Props, State> {
       selectedType,
     });
   }
-  changeDate = (date) => {
-    console.log(date);
-    this.setState({
-      departureDate: {
-        start: date,
-        end: date.clone().add(2, 'days'),
-      },
-    });
+  changeDate = (type, date) => {
+    if (type === 'start') {
+      let end = this.state.departureDate.end;
+      if (end.isBefore(date)) {
+        end = date.clone().add(1, 'day');
+      }
+      this.setState({
+        departureDate: {
+          start: date,
+          end,
+        },
+      });
+    }
+    if (type === 'end') {
+      this.setState({
+        departureDate: {
+          start: this.state.departureDate.start,
+          end: date,
+        },
+      });
+    }
   }
   render() {
     const {

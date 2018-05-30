@@ -24,15 +24,6 @@ export const CalendarContainer = styled.div`
     grid-template-rows: repeat(5, 50px)
 `;
 
-export const DayContainer = styled.div`
-    cursor: pointer;
-    grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
-    text-align: center;
-    padding-top: 10px;
-    ${props => (props.active ?
-    'background-color:#0176d2;color: white;'
-    : '')}
-`;
 export const MonthContainer = styled.div`
     margin: 25px 0;
 `;
@@ -46,4 +37,26 @@ export const MonthButton = styled.div`
 export const DateTypography = styled.span`
     font-size: ${props => (props.fontSize ? props.fontSize : '16px')};
     color: ${props => (props.color ? props.color : 'white')};
+`;
+export const DayContainer = styled.div`
+    position: relative;
+    cursor: pointer;
+    grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
+    text-align: center;
+    padding-top: 10px;
+    ${props => (props.active ?
+    'background-color:#0176d2;color: white;'
+    : '')}
+`;
+export const DayDrag = styled.div`
+    position: absolute;
+    top: 50%;
+    ${props => (props.last ?
+    'right: -10px;'
+    : 'left: -10px;'
+  )}
+    margin-top: -10px;
+    height: 20px;
+    width: 20px;
+    background: grey
 `;

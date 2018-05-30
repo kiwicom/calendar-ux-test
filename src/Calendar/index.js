@@ -9,7 +9,7 @@ import { CalendarWraper } from './styles';
 const Calendar = () => (
   <SelectedDates.Consumer>
     {(selectedDates) => {
-        const { currentMonth, departureDate, changeDate } = selectedDates;
+        const { currentMonth, departureDate } = selectedDates;
         const nextMonth = currentMonth.clone().add(1, 'month');
         return (
           <CalendarWraper>
