@@ -25,6 +25,7 @@ export const CalendarContainer = styled.div`
 `;
 
 export const DayContainer = styled.div`
+    cursor: pointer;
     grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
     text-align: center;
     padding-top: 10px;

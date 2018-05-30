@@ -9,7 +9,7 @@ import Inputs from './Inputs';
 import Footer from './Footer';
 import './App.css';
 
-import {Navigation,} from './styles';
+import { Navigation } from './styles';
 
 import { DEPARTURE } from './constants';
 
@@ -65,6 +65,15 @@ class App extends Component<Props, State> {
       selectedType,
     });
   }
+  changeDate = (date) => {
+    console.log(date);
+    this.setState({
+      departureDate: {
+        start: date,
+        end: date.clone().add(2, 'days'),
+      },
+    });
+  }
   render() {
     const {
       selectedType, departureDate, returnDate,
@@ -77,6 +86,8 @@ class App extends Component<Props, State> {
             currentMonth: this.state.currentMonth,
             departureDate: this.state.departureDate,
             returnDate: this.state.returnDate,
+            changeSelectedType: this.changeSelectedType,
+            changeDate: this.changeDate,
            }}
         >
           <Navigation onClick={this.prevMonth} left>

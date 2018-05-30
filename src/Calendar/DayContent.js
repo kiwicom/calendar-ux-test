@@ -22,7 +22,7 @@ const DayContent = ({ item, active, past }: Props) => {
   let content = (
     <React.Fragment>
       <Typography size="large">{item}</Typography><br />
-      <Typography size="small" type={type}>${price}</Typography>
+      <Typography size="small" type={type}>{`$${price}`}</Typography>
     </React.Fragment>
   );
   if (active) {

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import DayContent from './DayContent';
 
+import SelectedDates from '../context/SelectedDates';
+
 import { DayContainer } from './styles';
 
 type Props = {
@@ -26,14 +28,13 @@ class Day extends Component<Props, State> {
     const day = moment().date(item).month(month);
     this.state = {
       day,
-      past: day.clone().isBefore(moment()),
+      past: day.isBefore(moment()),
     };
   }
-  selectDate= (e: SyntheticMouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    console.log(this.props.item);
-    console.log(this.props.month);
-    console.log(this.state.past);
+  selectDate= (changeDate: (date: any) => void) => {
+    const { item, month } = this.props;
+    const newDate = moment().month(month).date(item).startOf('day');
+    changeDate(newDate);
   }
   render() {
     const {
@@ -47,21 +48,27 @@ class Day extends Component<Props, State> {
 
     if (activeDates) {
       const start = (activeDates.start.clone());
-      active = day.clone().isBetween(start, activeDates.end.clone().add(1, 'day'));
+      active = day.isBetween(start, activeDates.end.clone().add(1, 'day'));
     }
 
     const Content = <DayContent item={item} active={active} past={past} />;
 
-    if (item === 1) {
-      return (
-        <DayContainer startAt={dayInTheWeek}>
-          {Content}
-        </DayContainer>);
-    }
     return (
-      <DayContainer onClick={this.selectDate} active={active}>
-        {Content}
-      </DayContainer>
+      <SelectedDates.Consumer>
+        {(selectedDates) => {
+        const { changeDate } = selectedDates;
+        return (
+          <DayContainer
+            draggable
+            onClick={() => this.selectDate(changeDate)}
+            active={active}
+            startAt={item === 1 && dayInTheWeek}
+          >
+            {Content}
+          </DayContainer>);
+      }}
+
+      </SelectedDates.Consumer>
 
     );
   }

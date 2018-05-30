@@ -39,7 +39,7 @@ class Calendar extends React.Component<Props, State> {
   }
   renderDays = () => {
     const { daysInMonth } = this.state;
-    const month = this.props.date.clone().month();
+    const month = this.props.date.month();
     return Array.from(Array(daysInMonth).keys())
       .map(item => item + 1)
       .map(item => (

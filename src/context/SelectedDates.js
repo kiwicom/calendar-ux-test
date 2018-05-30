@@ -6,6 +6,8 @@ const initialState = {
   currentMonth: {},
   departureDate: {},
   returnDate: {},
+  changeDate: () => {},
+  changeSelectedType: () => {},
 };
 
 export default React.createContext({
