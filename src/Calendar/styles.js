@@ -24,7 +24,7 @@ export const CalendarContainer = styled.div`
     grid-template-rows: repeat(5, 50px)
 `;
 
-export const Day = styled.div`
+export const DayContainer = styled.div`
     grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
     text-align: center;
     padding-top: 10px;
