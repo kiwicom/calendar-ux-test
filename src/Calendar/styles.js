@@ -1,4 +1,9 @@
+// @noflow
 import styled from 'styled-components';
+
+export const CalendarWraper = styled.div`
+    display: flex;
+`;
 
 export const Container = styled.div`
     width: 350px;
@@ -23,6 +28,9 @@ export const Day = styled.div`
     grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
     text-align: center;
     padding-top: 10px;
+    ${props => (props.active ?
+    'background-color:#0176d2;color: white;'
+    : '')}
 `;
 export const MonthContainer = styled.div`
     margin: 25px 0;
@@ -32,4 +40,9 @@ export const MonthButton = styled.div`
     border-radius: 3px;
     padding: 10px 15px;
     background-color: #f5f7f9;
+`;
+
+export const DateTypography = styled.span`
+    font-size: 16px;
+    color: white;
 `;

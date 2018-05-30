@@ -1,20 +1,35 @@
+// @flow
 import React, { Component } from 'react';
 import moment from 'moment';
+
+import SelectedDatesContext from './context/SelectedDates';
 
 import Calendar from './Calendar';
 import Inputs from './Inputs';
 import Footer from './Footer';
 import './App.css';
 
-import {
-  CalendarContainer,
-  Navigation,
-} from './styles';
+import {Navigation,} from './styles';
 
 import { DEPARTURE } from './constants';
 
-class App extends Component {
-  constructor(props) {
+type State = {
+  selectedType: string,
+  currentMonth: any,
+  departureDate: {|
+    start: Object | null,
+    end: Object| null
+  |},
+  returnDate: {|
+    start: Object | null,
+    end: Object| null
+  |},
+}
+
+type Props = {}
+
+class App extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       selectedType: DEPARTURE,
@@ -29,7 +44,7 @@ class App extends Component {
       currentMonth: moment(),
     };
   }
-  nextMonth = (e) => {
+  nextMonth = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     const { currentMonth } = this.state;
     const nextMonth = currentMonth.clone().add(1, 'month');
@@ -37,7 +52,7 @@ class App extends Component {
       currentMonth: nextMonth,
     });
   }
-  prevMonth = (e) => {
+  prevMonth = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     const { currentMonth } = this.state;
     const prevMonth = currentMonth.clone().subtract(1, 'month');
@@ -45,35 +60,40 @@ class App extends Component {
       currentMonth: prevMonth,
     });
   }
-  changeSelectedType = (selectedType) => {
+  changeSelectedType = (selectedType: string) => {
     this.setState({
       selectedType,
     });
   }
   render() {
     const {
-      currentMonth, selectedType, departureDate, returnDate,
+      selectedType, departureDate, returnDate,
     } = this.state;
-    const nextMonth = currentMonth.clone().add(1, 'month');
     return (
       <div className="App">
-        <Navigation onClick={this.prevMonth} left>
-          {'<'}
-        </Navigation>
-        <Navigation onClick={this.nextMonth}>
-          {'>'}
-        </Navigation>
-        <Inputs
-          selectedType={selectedType}
-          departureDate={departureDate}
-          returnDate={returnDate}
-          changeSelectedType={this.changeSelectedType}
-        />
-        <CalendarContainer>
-          <Calendar date={currentMonth} />
-          <Calendar date={nextMonth} />
-        </CalendarContainer>
-        <Footer />
+        <SelectedDatesContext.Provider
+          value={{
+            selectedType: this.state.selectedType,
+            currentMonth: this.state.currentMonth,
+            departureDate: this.state.departureDate,
+            returnDate: this.state.returnDate,
+           }}
+        >
+          <Navigation onClick={this.prevMonth} left>
+            {'<'}
+          </Navigation>
+          <Navigation onClick={this.nextMonth}>
+            {'>'}
+          </Navigation>
+          <Inputs
+            selectedType={selectedType}
+            departureDate={departureDate}
+            returnDate={returnDate}
+            changeSelectedType={this.changeSelectedType}
+          />
+          <Calendar />
+          <Footer />
+        </SelectedDatesContext.Provider>
       </div>
     );
   }

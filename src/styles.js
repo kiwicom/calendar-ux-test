@@ -1,8 +1,6 @@
+// @noflow
 import styled from 'styled-components';
 
-export const CalendarContainer = styled.div`
-    display: flex;
-`;
 export const NavContainer = styled.div`
     display: flex;
     flex-direction: row;
