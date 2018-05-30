@@ -65,9 +65,17 @@ class App extends Component<Props, State> {
       selectedType,
     });
   }
-  changeDate = (type, date) => {
+  changeDate = (type: string, date: any) => {
+    if (type === 'clean') {
+      this.setState({
+        departureDate: {
+          start: date,
+          end: date.clone().add(1, 'day'),
+        },
+      });
+    }
     if (type === 'start') {
-      let end = this.state.departureDate.end;
+      let { end } = this.state.departureDate;
       if (end.isBefore(date)) {
         end = date.clone().add(1, 'day');
       }

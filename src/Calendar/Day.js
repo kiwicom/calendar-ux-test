@@ -7,6 +7,10 @@ import SelectedDates from '../context/SelectedDates';
 
 import { DayContainer, DayDrag } from './styles';
 
+// TODO: invastigate why you cannot change component while Draging..
+// HACK
+let dragType = 'end';
+
 type Props = {
     item: number,
     dayInTheWeek: number,
@@ -17,8 +21,7 @@ type Props = {
 type State = {
     day: any,
     past: bool,
-    id: string,
-    dragType: string
+    id: string
 }
 
 class Day extends Component<Props, State> {
@@ -32,22 +35,26 @@ class Day extends Component<Props, State> {
       id: '',
       day,
       past: day.isBefore(moment()),
-      dragType: 'end',
     };
   }
-  selectDate = (changeDate: (date: any) => void) => {
+  selectDate = (changeDate: (type: string, date: any) => void) => {
     const { item, month } = this.props;
     const newDate = moment().month(month).date(item).startOf('day');
-    changeDate('start', newDate);
+    changeDate('clean', newDate);
   }
-  dragOver = (e, changeDate) => {
+  dragEnter = (e, changeDate) => {
     const id = e.target.attributes.getNamedItem('data-id');
     if (id && id !== this.state.id) {
       this.setState({ id });
       const date = id.value.split('-');
       const newDate = moment().date(date[0]).month(date[1]).startOf('day');
-      changeDate(this.state.dragType, newDate);
+      changeDate(dragType, newDate);
     }
+  }
+  dragStart = (e) => {
+    const isFirst = e.target.attributes.getNamedItem('data-isfirst').value;
+
+    dragType = isFirst === 'true' ? 'start' : 'end';
   }
   render() {
     const {
@@ -76,25 +83,21 @@ class Day extends Component<Props, State> {
         const { changeDate } = selectedDates;
         return (
           <DayContainer
+            draggable
             data-id={`${item}-${month}`}
+            data-isfirst={isFirst}
             onClick={() => this.selectDate(changeDate)}
-            onDragOver={e => this.dragOver(e, changeDate)}
+            onDragStart={e => this.dragStart(e)}
+            onDragEnter={e => this.dragEnter(e, changeDate)}
             active={active}
             startAt={item === 1 && dayInTheWeek}
           >
             {isFirst ? (
-              <DayDrag
-                draggable
-              >{'<'}
-              </DayDrag>
+              <DayDrag >{'<'}</DayDrag>
             ) : null}
             {Content}
             {isLast ? (
-              <DayDrag
-                draggable
-                last
-              >{'>'}
-              </DayDrag>
+              <DayDrag last>{'>'}</DayDrag>
             ) : null}
           </DayContainer>);
       }}
