@@ -37,8 +37,13 @@ class Day extends Component<Props, State> {
       past: day.isBefore(moment()),
     };
   }
-  selectDate = (changeDate: (type: string, date: any) => void) => {
+  selectDate = (e, changeDate: (type: string, date: any) => void) => {
+    e.preventDefault();
     const { item, month } = this.props;
+    const past = e.currentTarget.attributes.getNamedItem('data-ispast');
+    if (past.value === 'true') {
+      return;
+    }
     const newDate = moment().month(month).date(item).startOf('day');
     changeDate('clean', newDate);
   }
@@ -56,8 +61,7 @@ class Day extends Component<Props, State> {
     }
   }
   dragStart = (e) => {
-    const isFirst = e.target.attributes.getNamedItem('data-isfirst').value;
-
+    const isFirst = e.currentTarget.attributes.getNamedItem('data-isfirst').value;
     dragType = isFirst === 'true' ? 'start' : 'end';
   }
   render() {
@@ -91,7 +95,7 @@ class Day extends Component<Props, State> {
             data-id={`${item}-${month}`}
             data-isfirst={isFirst}
             data-ispast={past}
-            onClick={() => this.selectDate(changeDate)}
+            onClick={e => this.selectDate(e, changeDate)}
             onDragStart={e => this.dragStart(e)}
             onDragEnter={e => this.dragEnter(e, changeDate)}
             active={active}
