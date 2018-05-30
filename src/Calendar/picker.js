@@ -3,6 +3,8 @@ import * as React from 'react';
 import moment from 'moment';
 import { Typography } from '@kiwicom/orbit-components';
 
+import DayContent from './DayContent';
+
 import {
   Container,
   DaysContainer,
@@ -10,7 +12,6 @@ import {
   Day,
   MonthButton,
   MonthContainer,
-  DateTypography,
 } from './styles';
 
 type State = {
@@ -43,28 +44,11 @@ class Calendar extends React.Component<Props, State> {
     const start = (departureDate.start.clone().subtract(1, 'day'));
 
     const day = moment().date(item).month(this.props.date.month());
-    const price = Math.floor(Math.random() * 1000);
-    let type = 'active';
-    if (price > 400 && price < 700) {
-      type = 'secondary';
-    } else if (price > 700) {
-      type = 'error';
-    }
 
     const active = day.isBetween(start, departureDate.end);
+    const past = day.isBefore(moment().subtract(1, 'day'));
+    const Content = <DayContent item={item} active={active} past={past} />;
 
-    const Content = active ? (
-      <React.Fragment>
-        <DateTypography>{item + 1}</DateTypography><br />
-        <DateTypography>${price}</DateTypography>
-      </React.Fragment>
-    ) :
-      (
-        <React.Fragment>
-          <Typography size="large">{item + 1}</Typography><br />
-          <Typography size="small" type={type}>${price}</Typography>
-        </React.Fragment>
-      );
 
     if (item === 0) {
       return (

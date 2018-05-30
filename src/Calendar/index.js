@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Picker from './picker';
+import Picker from './Picker';
 
 import SelectedDates from '../context/SelectedDates';
 

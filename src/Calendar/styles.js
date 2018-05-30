@@ -43,6 +43,6 @@ export const MonthButton = styled.div`
 `;
 
 export const DateTypography = styled.span`
-    font-size: 16px;
-    color: white;
+    font-size: ${props => (props.fontSize ? props.fontSize : '16px')};
+    color: ${props => (props.color ? props.color : 'white')};
 `;
