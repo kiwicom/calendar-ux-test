@@ -44,7 +44,11 @@ class Day extends Component<Props, State> {
   }
   dragEnter = (e, changeDate) => {
     const id = e.target.attributes.getNamedItem('data-id');
-    if (id && id !== this.state.id) {
+    const past = e.target.attributes.getNamedItem('data-ispast');
+    if (past && id && id !== this.state.id) {
+      if (past.value === 'true') {
+        return;
+      }
       this.setState({ id });
       const date = id.value.split('-');
       const newDate = moment().date(date[0]).month(date[1]).startOf('day');
@@ -86,6 +90,7 @@ class Day extends Component<Props, State> {
             draggable
             data-id={`${item}-${month}`}
             data-isfirst={isFirst}
+            data-ispast={past}
             onClick={() => this.selectDate(changeDate)}
             onDragStart={e => this.dragStart(e)}
             onDragEnter={e => this.dragEnter(e, changeDate)}
