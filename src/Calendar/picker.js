@@ -13,9 +13,17 @@ import {
   MonthContainer,
 } from './styles';
 
+type DayType = {
+  day: number,
+  date: any,
+  price: number,
+  month: number
+}
+
 type State = {
   dayInTheWeek: number,
-  daysInMonth: number
+  month: number,
+  days: [?DayType],
 }
 type Props = {
   date: any,
@@ -25,33 +33,46 @@ type Props = {
 class Calendar extends React.Component<Props, State> {
   state = {
     dayInTheWeek: 0,
-    daysInMonth: 0,
-  }
-  static getDerivedStateFromProps(props: Props) {
+    month: 0,
+    days: [{
+      day: 1, date: {}, price: 1, month: 1,
+    }],
+  };
+  static getDerivedStateFromProps(props: Props, state: State) {
     const { date } = props;
     const month = date.clone();
     const daysInMonth = month.daysInMonth();
     const dayInTheWeek = month.startOf('month').isoWeekday();
+    if (month.month() === state.month) {
+      return null;
+    }
     return {
+      month: month.month(),
       dayInTheWeek,
-      daysInMonth,
+      days: Array.from(Array(daysInMonth).keys())
+        .map((item) => {
+          const day = item + 1;
+          const dayDate = props.date.clone().date(day);
+          const price = Math.floor(Math.random() * 1000);
+          return {
+            day,
+            date: dayDate,
+            price,
+          };
+        }),
     };
   }
-  renderDays = () => {
-    const { daysInMonth } = this.state;
-    const month = this.props.date.month();
-    return Array.from(Array(daysInMonth).keys())
-      .map(item => item + 1)
-      .map(item => (
-        <Day
-          key={`${item}-${month}`}
-          item={item}
-          dayInTheWeek={this.state.dayInTheWeek}
-          activeDates={this.props.departureDate}
-          month={month}
-        />));
-  }
+  renderDay = (item: DayType) => (
+    <Day
+      key={`${item.day}-${this.state.month}`}
+      item={item}
+      dayInTheWeek={this.state.dayInTheWeek}
+      activeDates={this.props.departureDate}
+      month={this.state.month}
+    />
+  )
   render() {
+    const { days } = this.state;
     const title = this.props.date.format('MMMM YYYY');
     return (
       <Container>
@@ -70,7 +91,7 @@ class Calendar extends React.Component<Props, State> {
           <DayContainer><Typography size="small" type="secondary">S</Typography></DayContainer>
         </DaysContainer>
         <CalendarContainer>
-          {this.renderDays()}
+          {days.map(this.renderDay)}
         </CalendarContainer>
       </Container>
     );

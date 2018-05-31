@@ -7,11 +7,17 @@ import { DateTypography } from './styles';
 type Props = {
     active: bool,
     past: bool,
-    item: number
+    item: {
+      day: any,
+      price: number
+    }
 }
 
 const DayContent = ({ item, active, past }: Props) => {
-  const price = Math.floor(Math.random() * 1000);
+  const {
+    day,
+    price,
+  } = item;
   let type = 'active';
   if (price > 400 && price < 700) {
     type = 'secondary';
@@ -21,14 +27,14 @@ const DayContent = ({ item, active, past }: Props) => {
 
   let content = (
     <React.Fragment>
-      <Typography size="large">{item}</Typography><br />
+      <Typography size="large">{day}</Typography><br />
       <Typography size="small" type={type}>{`$${price}`}</Typography>
     </React.Fragment>
   );
   if (active) {
     content = (
       <React.Fragment>
-        <DateTypography>{item}</DateTypography><br />
+        <DateTypography>{day}</DateTypography><br />
         <DateTypography fontSize="12px">{`$${price}`}</DateTypography>
       </React.Fragment>
     );
@@ -36,7 +42,7 @@ const DayContent = ({ item, active, past }: Props) => {
   if (past) {
     content = (
       <React.Fragment>
-        <DateTypography color="#bac7d5">{item}</DateTypography><br />
+        <DateTypography color="#bac7d5">{day}</DateTypography><br />
       </React.Fragment>
     );
   }

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import moment from 'moment';
 import DayContent from './DayContent';
 
@@ -12,39 +12,37 @@ import { DayContainer, DayDrag } from './styles';
 let dragType = 'end';
 
 type Props = {
-    item: number,
+    item: any,
     dayInTheWeek: number,
     activeDates: any,
-    month: string
+    month: number
 }
 
 type State = {
-    day: any,
     past: bool,
     id: string
 }
 
-class Day extends Component<Props, State> {
+class Day extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     const {
-      item, month,
+      item,
     } = this.props;
-    const day = moment().date(item).month(month);
+    const day = item.date;
     this.state = {
       id: '',
-      day,
-      past: day.isBefore(moment()),
+      past: day.isBefore(moment().startOf('day')),
     };
   }
   selectDate = (e, changeDate: (type: string, date: any) => void) => {
     e.preventDefault();
-    const { item, month } = this.props;
+    const { item } = this.props;
     const past = e.currentTarget.attributes.getNamedItem('data-ispast');
     if (past.value === 'true') {
       return;
     }
-    const newDate = moment().month(month).date(item).startOf('day');
+    const newDate = item.date.clone().startOf('day');
     changeDate('clean', newDate);
   }
   dragEnter = (e, changeDate) => {
@@ -70,17 +68,17 @@ class Day extends Component<Props, State> {
     } = this.props;
     const {
       past,
-      day,
     } = this.state;
     let active = false;
     let isFirst = false;
     let isLast = false;
-
     if (activeDates) {
-      const start = activeDates.start.clone();
-      active = day.isBetween(start, activeDates.end.clone().add(1, 'day'));
-      isFirst = day.isSame(start, 'day');
-      isLast = day.isSame(activeDates.end, 'day');
+      const start = activeDates.start.clone().startOf('day');
+      const end = activeDates.end.clone().endOf('day');
+
+      active = item.date.isBetween(start, end);
+      isFirst = item.date.isSame(start, 'day');
+      isLast = item.date.isSame(end, 'day');
     }
 
     const Content = <DayContent item={item} active={active} past={past} />;
@@ -92,14 +90,14 @@ class Day extends Component<Props, State> {
         return (
           <DayContainer
             draggable
-            data-id={`${item}-${month}`}
+            data-id={`${item.day}-${month}`}
             data-isfirst={isFirst}
             data-ispast={past}
             onClick={e => this.selectDate(e, changeDate)}
             onDragStart={e => this.dragStart(e)}
             onDragEnter={e => this.dragEnter(e, changeDate)}
             active={active}
-            startAt={item === 1 && dayInTheWeek}
+            startAt={item.day === 1 && dayInTheWeek}
           >
             {isFirst ? (
               <DayDrag >{'<'}</DayDrag>

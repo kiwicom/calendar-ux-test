@@ -70,7 +70,7 @@ class App extends Component<Props, State> {
       this.setState({
         departureDate: {
           start: date,
-          end: date.clone().add(1, 'day'),
+          end: date.clone(),
         },
       });
     }
