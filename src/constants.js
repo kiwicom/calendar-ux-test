@@ -1,2 +1,2 @@
-export const DEPARTURE = 'departure';
-export const RETURN = 'return';
+export const DEPARTURE = 'departureDate';
+export const RETURN = 'returnDate';

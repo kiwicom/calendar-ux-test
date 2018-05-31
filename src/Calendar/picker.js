@@ -19,7 +19,7 @@ type DayType = {
   date: any,
   price: number,
   month: number,
-  isFirst: bool
+  isToday: bool
 }
 
 type State = {
@@ -29,7 +29,7 @@ type State = {
 }
 type Props = {
   date: any,
-  departureDate: any
+  activeDates: any
 }
 
 class Calendar extends React.Component<Props, State> {
@@ -70,7 +70,7 @@ class Calendar extends React.Component<Props, State> {
       key={`${item.day}-${this.state.month}`}
       item={item}
       dayInTheWeek={this.state.dayInTheWeek}
-      activeDates={this.props.departureDate}
+      activeDates={this.props.activeDates}
       month={this.state.month}
       isToday={item.isToday}
     />
@@ -78,6 +78,7 @@ class Calendar extends React.Component<Props, State> {
   render() {
     const { days } = this.state;
     const title = this.props.date.format('MMMM YYYY');
+    console.log(this.props.activeDates);
     return (
       <Container>
         <MonthContainer>

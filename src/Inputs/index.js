@@ -37,7 +37,7 @@ class Inputs extends Component<Props, State> {
       if (returnDate.start) {
         const returnStart = returnDate.start.format('ddd DD MMM');
         const returnEnd = returnDate.end.format('ddd DD MMM');
-        returnString = `${departureStart} - ${departureEnd}`;
+        returnString = `${returnStart} - ${returnEnd}`;
       }
 
       return {

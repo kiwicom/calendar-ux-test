@@ -86,7 +86,7 @@ class Day extends PureComponent<Props, State> {
     let active = false;
     let isFirstDay = false;
     let isLast = false;
-    if (activeDates) {
+    if (activeDates.start && activeDates.end) {
       const start = activeDates.start.clone().startOf('day');
       const end = activeDates.end.clone().endOf('day');
 

@@ -67,19 +67,20 @@ class App extends Component<Props, State> {
   }
   changeDate = (type: string, date: any) => {
     // TODO: refactor this
+    const { selectedType } = this.state;
     if (type === 'subtract') {
-      const { start, end } = this.state.departureDate;
+      const { start, end } = this.state[selectedType];
       this.setState({
-        departureDate: {
+        [selectedType]: {
           start: start.clone().subtract(1, 'day'),
           end,
         },
       });
     }
     if (type === 'add') {
-      const { start, end } = this.state.departureDate;
+      const { start, end } = this.state[selectedType];
       this.setState({
-        departureDate: {
+        [selectedType]: {
           start,
           end: end.clone().add(1, 'day'),
         },
@@ -87,31 +88,31 @@ class App extends Component<Props, State> {
     }
     if (type === 'clean') {
       this.setState({
-        departureDate: {
+        [selectedType]: {
           start: date,
           end: date.clone(),
         },
       });
     }
     if (type === 'start') {
-      let { end } = this.state.departureDate;
+      let { end } = this.state[selectedType];
       if (end.isBefore(date)) {
         end = date.clone().add(1, 'day');
       }
       this.setState({
-        departureDate: {
+        [selectedType]: {
           start: date,
           end,
         },
       });
     }
     if (type === 'end') {
-      if (date.isBefore(this.state.departureDate.start)) {
+      if (date.isBefore(this.state[selectedType].start)) {
         return;
       }
       this.setState({
-        departureDate: {
-          start: this.state.departureDate.start,
+        [selectedType]: {
+          start: this.state[selectedType].start,
           end: date,
         },
       });
