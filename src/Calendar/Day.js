@@ -15,7 +15,8 @@ type Props = {
     item: any,
     dayInTheWeek: number,
     activeDates: any,
-    month: number
+    month: number,
+    isFirst: bool
 }
 
 type State = {
@@ -73,20 +74,24 @@ class Day extends PureComponent<Props, State> {
   }
   render() {
     const {
-      dayInTheWeek, activeDates, item, month,
+      dayInTheWeek,
+      activeDates,
+      isFirst,
+      item,
+      month,
     } = this.props;
     const {
       past,
     } = this.state;
     let active = false;
-    let isFirst = false;
+    let isFirstDay = false;
     let isLast = false;
     if (activeDates) {
       const start = activeDates.start.clone().startOf('day');
       const end = activeDates.end.clone().endOf('day');
 
       active = item.date.isBetween(start, end);
-      isFirst = item.date.isSame(start, 'day');
+      isFirstDay = item.date.isSame(start, 'day');
       isLast = item.date.isSame(end, 'day');
     }
     return (
@@ -113,7 +118,7 @@ class Day extends PureComponent<Props, State> {
                 past={past}
               />
             </DayContentContainer>
-            {isFirst ? (
+            { !isFirst && isFirstDay ? (
               <DayDrag onClick={this.addPreviousDay}>{'<'}</DayDrag>
             ) : null}
             {isLast ? (

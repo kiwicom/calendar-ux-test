@@ -1,5 +1,6 @@
 /* @flow */
 import * as React from 'react';
+import moment from 'moment';
 import { Typography } from '@kiwicom/orbit-components';
 
 import Day from './Day';
@@ -17,13 +18,14 @@ type DayType = {
   day: number,
   date: any,
   price: number,
-  month: number
+  month: number,
+  isFirst: bool
 }
 
 type State = {
   dayInTheWeek: number,
   month: number,
-  days: [?DayType],
+  days: [?DayType]
 }
 type Props = {
   date: any,
@@ -35,7 +37,7 @@ class Calendar extends React.Component<Props, State> {
     dayInTheWeek: 0,
     month: 0,
     days: [{
-      day: 1, date: {}, price: 1, month: 1,
+      day: 1, date: {}, price: 1, month: 1, isFirst: false,
     }],
   };
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -58,6 +60,7 @@ class Calendar extends React.Component<Props, State> {
             day,
             date: dayDate,
             price,
+            isFirst: dayDate.isSame(moment(), 'day'),
           };
         }),
     };
@@ -69,6 +72,7 @@ class Calendar extends React.Component<Props, State> {
       dayInTheWeek={this.state.dayInTheWeek}
       activeDates={this.props.departureDate}
       month={this.state.month}
+      isFirst={item.isFirst}
     />
   )
   render() {
