@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { Typography } from '@kiwicom/orbit-components';
 
-import { Container, InputContainer } from './styles';
+import { Container, InputContainer, AnyTimeIcon } from './styles';
+
+import anyTimeIcon from '../img/anytime.svg';
 
 import { DEPARTURE, RETURN } from '../constants';
 
@@ -11,13 +13,28 @@ type State = {
     returnString: string
 }
 type Props = {
-    departureDate: {|
-      start: any,
-      end: any
-    |},
+    departureDate: any,
     returnDate: any,
     selectedType: string,
-    changeSelectedType: (type: string) => void
+    changeSelectedType: (type: string) => void,
+    changeDate: (type: string) => void
+}
+
+function getDateString(date) {
+  let dateString = 'Set a date';
+  if (date.start && date.end) {
+    const returnStart = date.start.format('ddd DD MMM');
+    const returnEnd = date.end.format('ddd DD MMM');
+
+    if (date.start.isSame(date.end, 'day')) {
+      dateString = `${returnStart}`;
+    } else {
+      dateString = `${returnStart} - ${returnEnd}`;
+    }
+  } else if (date.anytime) {
+    dateString = 'Anytime';
+  }
+  return dateString;
 }
 
 class Inputs extends Component<Props, State> {
@@ -27,26 +44,8 @@ class Inputs extends Component<Props, State> {
     }
     static getDerivedStateFromProps(props: Props) {
       const { departureDate, returnDate } = props;
-      let returnString = 'Set a date';
-      let departureString = 'Set a date';
-
-      const departureStart = departureDate.start.format('ddd DD MMM');
-      const departureEnd = departureDate.end.format('ddd DD MMM');
-      if (departureDate.start.isSame(departureDate.end, 'day')) {
-        departureString = `${departureStart}`;
-      } else {
-        departureString = `${departureStart} - ${departureEnd}`;
-      }
-
-      if (returnDate.start && returnDate.end) {
-        const returnStart = returnDate.start.format('ddd DD MMM');
-        const returnEnd = returnDate.end.format('ddd DD MMM');
-        if (returnDate.start.isSame(returnDate.end, 'day')) {
-          returnString = `${returnStart}`;
-        } else {
-          returnString = `${returnStart} - ${returnEnd}`;
-        }
-      }
+      const departureString = getDateString(departureDate);
+      const returnString = getDateString(returnDate);
 
       return {
         departureString,
@@ -54,22 +53,42 @@ class Inputs extends Component<Props, State> {
       };
     }
     checkifActive = (type: string) => type === this.props.selectedType
+    selectAnytime = () => {
+      this.props.changeDate('anytime');
+    }
     render() {
+      const { selectedType } = this.props;
+      const { start } = this.props[selectedType];
+      const departureActive = this.checkifActive(DEPARTURE);
+      const returnActive = this.checkifActive(RETURN);
+
       return (
         <Container>
           <InputContainer
             onClick={() => this.props.changeSelectedType(DEPARTURE)}
-            active={this.checkifActive(DEPARTURE)}
+            active={departureActive}
           >
             <Typography size="small">Departure</Typography><br />
             <Typography size="large">{this.state.departureString}</Typography>
+            {departureActive && start ?
+              <AnyTimeIcon
+                onClick={this.selectAnytime}
+                src={anyTimeIcon}
+              />
+            : null}
           </InputContainer>
           <InputContainer
             onClick={() => this.props.changeSelectedType(RETURN)}
-            active={this.checkifActive(RETURN)}
+            active={returnActive}
           >
             <Typography size="small">Return</Typography><br />
             <Typography size="large">{this.state.returnString}</Typography>
+            {returnActive && start ?
+              <AnyTimeIcon
+                onClick={this.selectAnytime}
+                src={anyTimeIcon}
+              />
+            : null}
           </InputContainer>
           <InputContainer>
             <Typography size="small">Length of your stay</Typography><br />

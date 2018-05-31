@@ -5,14 +5,25 @@ import {
   Typography,
 } from '@kiwicom/orbit-components';
 
-import { Container, Search, Desc } from './styles';
+import {
+  Container,
+  Search,
+  Desc,
+  DateIcon,
+  DescContainer,
+} from './styles';
+
+import anyTimeImg from '../img/anytime.svg';
 
 const Footer = () =>
   (
     <Container>
-      <Typography size="small" type="secondary">
-          Pick a date of your return
-      </Typography>
+      <DescContainer>
+        <DateIcon src={anyTimeImg} />
+        <Typography size="small" type="secondary">
+        Click for reset to Anytime
+        </Typography>
+      </DescContainer>
       <Search>
         <Desc>
           <Typography size="small" type="secondary">

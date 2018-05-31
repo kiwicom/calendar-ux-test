@@ -17,10 +17,12 @@ type State = {
   selectedType: string,
   currentMonth: any,
   departureDate: {|
+    anytime: bool,
     start: Object | null,
     end: Object| null
   |},
   returnDate: {|
+    anytime: bool,
     start: Object | null,
     end: Object| null
   |},
@@ -34,10 +36,12 @@ class App extends Component<Props, State> {
     this.state = {
       selectedType: DEPARTURE,
       departureDate: {
+        anytime: false,
         start: moment(),
         end: moment().add(1, 'day'),
       },
       returnDate: {
+        anytime: false,
         start: null,
         end: null,
       },
@@ -68,10 +72,19 @@ class App extends Component<Props, State> {
   changeDate = (type: string, date: any) => {
     // TODO: refactor this
     const { selectedType } = this.state;
-
+    if (type === 'anytime') {
+      this.setState({
+        [selectedType]: {
+          anytime: true,
+          start: null,
+          end: null,
+        },
+      });
+    }
     if (type === 'month') {
       this.setState({
         [selectedType]: {
+          anytime: false,
           start: date.clone().startOf('month'),
           end: date.clone().endOf('month'),
         },
@@ -81,6 +94,7 @@ class App extends Component<Props, State> {
       const { start, end } = this.state[selectedType];
       this.setState({
         [selectedType]: {
+          anytime: false,
           start: start.clone().subtract(1, 'day'),
           end,
         },
@@ -90,6 +104,8 @@ class App extends Component<Props, State> {
       const { start, end } = this.state[selectedType];
       this.setState({
         [selectedType]: {
+          anytime: false,
+
           start,
           end: end.clone().add(1, 'day'),
         },
@@ -98,6 +114,7 @@ class App extends Component<Props, State> {
     if (type === 'clean') {
       this.setState({
         [selectedType]: {
+          anytime: false,
           start: date,
           end: date.clone(),
         },
@@ -110,6 +127,7 @@ class App extends Component<Props, State> {
       }
       this.setState({
         [selectedType]: {
+          anytime: false,
           start: date,
           end,
         },
@@ -121,6 +139,7 @@ class App extends Component<Props, State> {
       }
       this.setState({
         [selectedType]: {
+          anytime: false,
           start: this.state[selectedType].start,
           end: date,
         },
@@ -129,34 +148,35 @@ class App extends Component<Props, State> {
   }
   render() {
     const {
-      selectedType, departureDate, returnDate,
+      selectedType, departureDate, returnDate, currentMonth,
     } = this.state;
     return (
       <div className="App">
         <SelectedDatesContext.Provider
           value={{
-            selectedType: this.state.selectedType,
-            currentMonth: this.state.currentMonth,
-            departureDate: this.state.departureDate,
-            returnDate: this.state.returnDate,
+            selectedType,
+            currentMonth,
+            departureDate,
+            returnDate,
             changeSelectedType: this.changeSelectedType,
             changeDate: this.changeDate,
            }}
         >
+          <Inputs
+            selectedType={selectedType}
+            departureDate={departureDate}
+            returnDate={returnDate}
+            changeSelectedType={this.changeSelectedType}
+            changeDate={this.changeDate}
+          />
+          <Calendar />
+          <Footer />
           <Navigation onClick={this.prevMonth} left>
             {'<'}
           </Navigation>
           <Navigation onClick={this.nextMonth}>
             {'>'}
           </Navigation>
-          <Inputs
-            selectedType={selectedType}
-            departureDate={departureDate}
-            returnDate={returnDate}
-            changeSelectedType={this.changeSelectedType}
-          />
-          <Calendar />
-          <Footer />
         </SelectedDatesContext.Provider>
       </div>
     );

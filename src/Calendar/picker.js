@@ -9,7 +9,7 @@ import {
   Container,
   DaysContainer,
   CalendarContainer,
-  DayContainer,
+  DayContentContainer,
   MonthButton,
   MonthContainer,
 } from './styles';
@@ -25,27 +25,26 @@ type DayType = {
 type State = {
   dayInTheWeek: number,
   month: number,
-  days: [?DayType]
+  days: Array<DayType>
 }
 type Props = {
   date: any,
   activeDates: any,
-  changeDate: () => void
+  changeDate: (type: string, date: any) => void
 }
 
 class Calendar extends React.Component<Props, State> {
   state = {
     dayInTheWeek: 0,
     month: 0,
-    days: [{
-      day: 1, date: {}, price: 1, month: 1, isFirst: false,
-    }],
+    days: [],
   };
   static getDerivedStateFromProps(props: Props, state: State) {
     const { date } = props;
     const month = date.clone();
     const daysInMonth = month.daysInMonth();
     const dayInTheWeek = month.startOf('month').isoWeekday();
+    // If month didnt change dont rerander
     if (month.month() === state.month) {
       return null;
     }
@@ -57,6 +56,7 @@ class Calendar extends React.Component<Props, State> {
           const day = item + 1;
           const dayDate = props.date.clone().date(day);
           const price = Math.floor(Math.random() * 1000);
+
           return {
             day,
             date: dayDate,
@@ -90,13 +90,13 @@ class Calendar extends React.Component<Props, State> {
           </MonthButton>
         </MonthContainer>
         <DaysContainer>
-          <DayContainer><Typography size="small" type="secondary">M</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">T</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">W</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">T</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">F</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">S</Typography></DayContainer>
-          <DayContainer><Typography size="small" type="secondary">S</Typography></DayContainer>
+          <DayContentContainer><Typography size="small" type="secondary">M</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">T</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">W</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">T</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">F</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">S</Typography></DayContentContainer>
+          <DayContentContainer><Typography size="small" type="secondary">S</Typography></DayContentContainer>
         </DaysContainer>
         <CalendarContainer>
           {days.map(this.renderDay)}

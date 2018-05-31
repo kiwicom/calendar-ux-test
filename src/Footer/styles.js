@@ -1,3 +1,4 @@
+// @noflow
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -14,4 +15,11 @@ export const Search = styled.div`
 `;
 export const Desc = styled.p`
     margin-right:15px;
+`;
+export const DateIcon = styled.img`
+    margin-right: 10px;
+`;
+export const DescContainer = styled.div`
+    display: flex;
+    justifyContent: "center"
 `;

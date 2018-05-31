@@ -37,7 +37,7 @@ class Day extends PureComponent<Props, State> {
       past: day.isBefore(moment().startOf('day')),
     };
   }
-  selectDate = (e) => {
+  selectDate = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     const { item } = this.props;
     const past = e.currentTarget.attributes.getNamedItem('data-ispast');
@@ -47,7 +47,7 @@ class Day extends PureComponent<Props, State> {
     const newDate = item.date.clone().startOf('day');
     this.changeDate('clean', newDate);
   }
-  dragEnter = (e) => {
+  dragEnter = (e: SyntheticMouseEvent<HTMLElement>) => {
     const id = e.currentTarget.attributes.getNamedItem('data-id');
     const past = e.currentTarget.attributes.getNamedItem('data-ispast');
     if (past && id && id !== this.state.id) {
@@ -60,15 +60,15 @@ class Day extends PureComponent<Props, State> {
       this.changeDate(dragType, newDate);
     }
   }
-  dragStart = (e) => {
+  dragStart = (e: SyntheticMouseEvent<HTMLElement>) => {
     const isFirst = e.currentTarget.attributes.getNamedItem('data-isfirst').value;
     dragType = isFirst === 'true' ? 'start' : 'end';
   }
-  addPreviousDay = (e) => {
+  addPreviousDay = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     this.changeDate('subtract');
   }
-  addNextDay = (e) => {
+  addNextDay = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     this.changeDate('add');
   }
