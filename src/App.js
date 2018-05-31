@@ -106,6 +106,9 @@ class App extends Component<Props, State> {
       });
     }
     if (type === 'end') {
+      if (date.isBefore(this.state.departureDate.start)) {
+        return;
+      }
       this.setState({
         departureDate: {
           start: this.state.departureDate.start,

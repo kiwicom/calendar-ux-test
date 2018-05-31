@@ -60,7 +60,7 @@ class Calendar extends React.Component<Props, State> {
             day,
             date: dayDate,
             price,
-            isFirst: dayDate.isSame(moment(), 'day'),
+            isToday: dayDate.isSame(moment(), 'day'),
           };
         }),
     };
@@ -72,7 +72,7 @@ class Calendar extends React.Component<Props, State> {
       dayInTheWeek={this.state.dayInTheWeek}
       activeDates={this.props.departureDate}
       month={this.state.month}
-      isFirst={item.isFirst}
+      isToday={item.isToday}
     />
   )
   render() {

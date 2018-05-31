@@ -16,7 +16,7 @@ type Props = {
     dayInTheWeek: number,
     activeDates: any,
     month: number,
-    isFirst: bool
+    isToday: bool
 }
 
 type State = {
@@ -48,8 +48,8 @@ class Day extends PureComponent<Props, State> {
     this.changeDate('clean', newDate);
   }
   dragEnter = (e) => {
-    const id = e.target.attributes.getNamedItem('data-id');
-    const past = e.target.attributes.getNamedItem('data-ispast');
+    const id = e.currentTarget.attributes.getNamedItem('data-id');
+    const past = e.currentTarget.attributes.getNamedItem('data-ispast');
     if (past && id && id !== this.state.id) {
       if (past.value === 'true') {
         return;
@@ -76,7 +76,7 @@ class Day extends PureComponent<Props, State> {
     const {
       dayInTheWeek,
       activeDates,
-      isFirst,
+      isToday,
       item,
       month,
     } = this.props;
@@ -100,15 +100,17 @@ class Day extends PureComponent<Props, State> {
         const { changeDate } = selectedDates;
         this.changeDate = changeDate;
         return (
-          <DayContainer>
+          <DayContainer
+            onDragEnter={this.dragEnter}
+            data-id={`${item.day}-${month}`}
+            data-ispast={past}
+          >
             <DayContentContainer
               draggable
               onClick={this.selectDate}
-              data-id={`${item.day}-${month}`}
               data-ispast={past}
-              data-isfirst={isFirst}
+              data-isfirst={isFirstDay}
               onDragStart={this.dragStart}
-              onDragEnter={this.dragEnter}
               active={active}
               startAt={item.day === 1 && dayInTheWeek}
             >
@@ -118,7 +120,7 @@ class Day extends PureComponent<Props, State> {
                 past={past}
               />
             </DayContentContainer>
-            { !isFirst && isFirstDay ? (
+            { !isToday && isFirstDay ? (
               <DayDrag onClick={this.addPreviousDay}>{'<'}</DayDrag>
             ) : null}
             {isLast ? (
