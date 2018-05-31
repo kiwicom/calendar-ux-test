@@ -39,7 +39,10 @@ export const DateTypography = styled.span`
     color: ${props => (props.color ? props.color : 'white')};
 `;
 export const DayContainer = styled.div`
-    position: relative;
+    position:relative
+`;
+export const DayContentContainer = styled.div`
+    height: 100%;
     cursor: pointer;
     grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
     text-align: center;
@@ -49,8 +52,12 @@ export const DayContainer = styled.div`
     : '')}
 `;
 export const DayDrag = styled.div`
+    z-index: 10;
     position: absolute;
     top: 50%;
+    text-align:center;
+    color: white;
+    cursor: pointer;
     ${props => (props.last ?
     'right: -10px;'
     : 'left: -10px;'

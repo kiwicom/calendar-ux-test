@@ -66,6 +66,25 @@ class App extends Component<Props, State> {
     });
   }
   changeDate = (type: string, date: any) => {
+    // TODO: refactor this
+    if (type === 'subtract') {
+      const { start, end } = this.state.departureDate;
+      this.setState({
+        departureDate: {
+          start: start.clone().subtract(1, 'day'),
+          end,
+        },
+      });
+    }
+    if (type === 'add') {
+      const { start, end } = this.state.departureDate;
+      this.setState({
+        departureDate: {
+          start,
+          end: end.clone().add(1, 'day'),
+        },
+      });
+    }
     if (type === 'clean') {
       this.setState({
         departureDate: {
