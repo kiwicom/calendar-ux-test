@@ -1,3 +1,5 @@
-# [Calendar-UX-test](https://kiwicom.github.io/calendar-ux-test/)
+# [Calendar-UX-prototype](https://kiwicom.github.io/calendar-ux-test/)
 
-New calendar component for UX testing
+New calendar prototype for UX testing
+
+![Calendar Prototype](./src/img/calendar.png)
