@@ -7,11 +7,10 @@ import SelectedDatesContext from './context/SelectedDates';
 import Calendar from './Calendar';
 import Inputs from './Inputs';
 import Footer from './Footer';
-import './App.css';
-
-import { Navigation } from './styles';
+import CalendarNavigation from './Calendar/Navigation';
 
 import { DEPARTURE } from './constants';
+import './App.css';
 
 type State = {
   selectedType: string,
@@ -162,6 +161,7 @@ class App extends Component<Props, State> {
             changeDate: this.changeDate,
            }}
         >
+
           <Inputs
             selectedType={selectedType}
             departureDate={departureDate}
@@ -170,13 +170,12 @@ class App extends Component<Props, State> {
             changeDate={this.changeDate}
           />
           <Calendar />
+          <CalendarNavigation
+            prevMonth={this.prevMonth}
+            nextMonth={this.nextMonth}
+          />
           <Footer />
-          <Navigation onClick={this.prevMonth} left>
-            {'<'}
-          </Navigation>
-          <Navigation onClick={this.nextMonth}>
-            {'>'}
-          </Navigation>
+
         </SelectedDatesContext.Provider>
       </div>
     );

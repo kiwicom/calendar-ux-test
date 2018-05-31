@@ -5,7 +5,10 @@ import DayContent from './DayContent';
 
 import SelectedDates from '../context/SelectedDates';
 
-import { DayContainer, DayContentContainer, DayDrag } from './styles';
+import { DayContainer, DayContentContainer, DayDrag, DragIcon } from './styles';
+
+import RightImg from '../img/right.svg';
+import LeftImg from '../img/left.svg';
 
 // TODO: invastigate why you cannot change component while Draging..
 // HACK
@@ -121,13 +124,16 @@ class Day extends PureComponent<Props, State> {
               />
             </DayContentContainer>
             { !isToday && isFirstDay ? (
-              <DayDrag onClick={this.addPreviousDay}>{'<'}</DayDrag>
+              <DayDrag onClick={this.addPreviousDay}>
+                <DragIcon src={LeftImg} />
+              </DayDrag>
             ) : null}
             {isLast ? (
               <DayDrag
                 last
                 onClick={this.addNextDay}
-              >{'>'}
+              >
+                <DragIcon src={RightImg} />
               </DayDrag>
             ) : null}
           </DayContainer>

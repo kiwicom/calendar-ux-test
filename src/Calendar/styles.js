@@ -1,6 +1,26 @@
 // @noflow
 import styled from 'styled-components';
 
+export const Navigation = styled.div`
+    cursor: pointer;
+    display: flex;
+    position:absolute;
+    ${props => (props.left ? 'left: -15px' : 'right: -15px')}
+    top: 50%;
+    width: 30px;
+    height: 60px;
+    margin-top: -30px;
+    border-radius: 3px;
+    background-color: #46515e;
+    color: white;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const NavigationIcon = styled.img`
+    width: 8px;
+`;
+
 export const CalendarWraper = styled.div`
     display: flex;
 `;
@@ -55,16 +75,20 @@ export const DayContentContainer = styled.div`
 export const DayDrag = styled.div`
     z-index: 10;
     position: absolute;
+    height: 22px;
+    width:11px;
     top: 50%;
     text-align:center;
     color: white;
     cursor: pointer;
+    border-radius: 2px;
     ${props => (props.last ?
-    'right: -10px;'
-    : 'left: -10px;'
+    'right: -7px;'
+    : 'left: -7px;'
   )}
     margin-top: -10px;
-    height: 20px;
-    width: 20px;
-    background: grey
+    background: #46515e
+`;
+
+export const DragIcon = styled.img`
 `;
