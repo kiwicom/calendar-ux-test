@@ -11,7 +11,7 @@ const Calendar = () => (
   <SelectedDates.Consumer>
     {(selectedDates) => {
         const {
-          currentMonth, selectedType, departureDate, returnDate,
+          currentMonth, selectedType, departureDate, returnDate, changeDate,
         } = selectedDates;
         const nextMonth = currentMonth.clone().add(1, 'month');
         let activeDates = departureDate;
@@ -21,10 +21,12 @@ const Calendar = () => (
         return (
           <CalendarWraper>
             <Picker
+              changeDate={changeDate}
               date={currentMonth}
               activeDates={activeDates}
             />
             <Picker
+              changeDate={changeDate}
               date={nextMonth}
               activeDates={activeDates}
             />

@@ -29,7 +29,8 @@ type State = {
 }
 type Props = {
   date: any,
-  activeDates: any
+  activeDates: any,
+  changeDate: () => void
 }
 
 class Calendar extends React.Component<Props, State> {
@@ -65,6 +66,9 @@ class Calendar extends React.Component<Props, State> {
         }),
     };
   }
+  selectWholeMonth= () => {
+    this.props.changeDate('month', this.props.date);
+  }
   renderDay = (item: DayType) => (
     <Day
       key={`${item.day}-${this.state.month}`}
@@ -78,11 +82,10 @@ class Calendar extends React.Component<Props, State> {
   render() {
     const { days } = this.state;
     const title = this.props.date.format('MMMM YYYY');
-    console.log(this.props.activeDates);
     return (
       <Container>
         <MonthContainer>
-          <MonthButton>
+          <MonthButton onClick={this.selectWholeMonth}>
             <Typography size="large">{title}</Typography>
           </MonthButton>
         </MonthContainer>

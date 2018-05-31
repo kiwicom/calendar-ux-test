@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   Button,
@@ -15,10 +16,10 @@ const Footer = () =>
       <Search>
         <Desc>
           <Typography size="small" type="secondary">
-            Showing prices for Vienna -> Paris
+            {'Showing prices for Vienna -> Paris'}
           </Typography>
         </Desc>
-        <Button title="Search" onClick={() => {}} />
+        <Button title="Done" onClick={() => {}} />
       </Search>
     </Container>
   );

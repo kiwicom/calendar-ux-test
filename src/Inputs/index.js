@@ -32,12 +32,20 @@ class Inputs extends Component<Props, State> {
 
       const departureStart = departureDate.start.format('ddd DD MMM');
       const departureEnd = departureDate.end.format('ddd DD MMM');
-      departureString = `${departureStart} - ${departureEnd}`;
+      if (departureDate.start.isSame(departureDate.end, 'day')) {
+        departureString = `${departureStart}`;
+      } else {
+        departureString = `${departureStart} - ${departureEnd}`;
+      }
 
-      if (returnDate.start) {
+      if (returnDate.start && returnDate.end) {
         const returnStart = returnDate.start.format('ddd DD MMM');
         const returnEnd = returnDate.end.format('ddd DD MMM');
-        returnString = `${returnStart} - ${returnEnd}`;
+        if (returnDate.start.isSame(returnDate.end, 'day')) {
+          returnString = `${returnStart}`;
+        } else {
+          returnString = `${returnStart} - ${returnEnd}`;
+        }
       }
 
       return {

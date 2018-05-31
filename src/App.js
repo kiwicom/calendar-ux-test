@@ -68,6 +68,15 @@ class App extends Component<Props, State> {
   changeDate = (type: string, date: any) => {
     // TODO: refactor this
     const { selectedType } = this.state;
+
+    if (type === 'month') {
+      this.setState({
+        [selectedType]: {
+          start: date.clone().startOf('month'),
+          end: date.clone().endOf('month'),
+        },
+      });
+    }
     if (type === 'subtract') {
       const { start, end } = this.state[selectedType];
       this.setState({

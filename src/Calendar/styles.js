@@ -25,6 +25,7 @@ export const CalendarContainer = styled.div`
 `;
 
 export const MonthContainer = styled.div`
+    cursor: pointer;
     margin: 25px 0;
 `;
 export const MonthButton = styled.div`
