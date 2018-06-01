@@ -61,11 +61,11 @@ export const DateTypography = styled.span`
 `;
 export const DayContainer = styled.div`
     position:relative
+    grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
 `;
 export const DayContentContainer = styled.div`
     height: 100%;
     cursor: pointer;
-    grid-column-start: ${props => (props.startAt ? props.startAt : 'auto')};
     text-align: center;
     padding-top: 10px;
     ${props => (props.active ?

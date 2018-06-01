@@ -107,6 +107,7 @@ class Day extends PureComponent<Props, State> {
             onDragEnter={this.dragEnter}
             data-id={`${item.day}-${month}`}
             data-ispast={past}
+            startAt={item.day === 1 && dayInTheWeek}
           >
             <DayContentContainer
               draggable
@@ -115,7 +116,6 @@ class Day extends PureComponent<Props, State> {
               data-isfirst={isFirstDay}
               onDragStart={this.dragStart}
               active={active}
-              startAt={item.day === 1 && dayInTheWeek}
             >
               <DayContent
                 item={item}
