@@ -10,7 +10,6 @@ import Footer from './Footer';
 import CalendarNavigation from './Calendar/Navigation';
 
 import { DEPARTURE } from './constants';
-import './App.css';
 
 type State = {
   selectedType: string,
