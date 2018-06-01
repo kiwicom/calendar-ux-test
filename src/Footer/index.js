@@ -13,27 +13,37 @@ import {
   DescContainer,
 } from './styles';
 
+import { DEPARTURE } from '../constants';
+
 import anyTimeImg from '../img/anytime.svg';
 
-const Footer = () =>
-  (
-    <Container>
-      <DescContainer>
-        <DateIcon src={anyTimeImg} />
-        <Typography size="small" type="secondary">
+type Props = {
+  selectedType: string
+}
+
+const Footer = ({ selectedType }: Props) => (
+  <Container>
+    <DescContainer>
+      <DateIcon src={anyTimeImg} />
+      <Typography size="small" type="secondary">
         Click for reset to Anytime
+      </Typography>
+    </DescContainer>
+    <Search>
+      <Desc>
+        <Typography size="small" type="secondary">
+
+          {selectedType === DEPARTURE ?
+            'Showing prices for Vienna -> Paris'
+            :
+            'Showing prices for Paris -> Vienna'
+          }
         </Typography>
-      </DescContainer>
-      <Search>
-        <Desc>
-          <Typography size="small" type="secondary">
-            {'Showing prices for Vienna -> Paris'}
-          </Typography>
-        </Desc>
-        <Button title="Done" onClick={() => {}} />
-      </Search>
-    </Container>
-  );
+      </Desc>
+      <Button title="Done" onClick={() => {}} />
+    </Search>
+  </Container>
+);
 
 
 export default Footer;

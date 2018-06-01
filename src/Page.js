@@ -32,9 +32,9 @@ class Page extends React.Component<null, State> {
       const { calendarVisible } = this.state;
       return (
         <Container>
-          {!calendarVisible ? <Title>Travelanywhere</Title> : <Title>Set a departure date</Title>}
           {!calendarVisible ?
             <React.Fragment>
+              <Title>Travelanywhere</Title>
               <Inputs onClick={this.showCalendar}>
                 <Typography size="large" type="secondary">Try Sightseeing Europe</Typography>
                 <RightContent>

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 
 import SelectedDatesContext from './context/SelectedDates';
@@ -8,6 +8,8 @@ import Calendar from './Calendar';
 import Inputs from './Inputs';
 import Footer from './Footer';
 import CalendarNavigation from './Calendar/Navigation';
+
+import { Title } from './page.styles';
 
 import { DEPARTURE } from './constants';
 
@@ -149,9 +151,15 @@ class App extends Component<Props, State> {
       selectedType, departureDate, returnDate, currentMonth,
     } = this.state;
     return (
-      <div className="App">
-        <SelectedDatesContext.Provider
-          value={{
+      <Fragment>
+        {selectedType === DEPARTURE ?
+          <Title>Set a departure date</Title>
+          :
+          <Title>Set a return date</Title>
+        }
+        <div className="App">
+          <SelectedDatesContext.Provider
+            value={{
             selectedType,
             currentMonth,
             departureDate,
@@ -159,24 +167,25 @@ class App extends Component<Props, State> {
             changeSelectedType: this.changeSelectedType,
             changeDate: this.changeDate,
            }}
-        >
+          >
 
-          <Inputs
-            selectedType={selectedType}
-            departureDate={departureDate}
-            returnDate={returnDate}
-            changeSelectedType={this.changeSelectedType}
-            changeDate={this.changeDate}
-          />
-          <Calendar />
-          <CalendarNavigation
-            prevMonth={this.prevMonth}
-            nextMonth={this.nextMonth}
-          />
-          <Footer />
+            <Inputs
+              selectedType={selectedType}
+              departureDate={departureDate}
+              returnDate={returnDate}
+              changeSelectedType={this.changeSelectedType}
+              changeDate={this.changeDate}
+            />
+            <Calendar />
+            <CalendarNavigation
+              prevMonth={this.prevMonth}
+              nextMonth={this.nextMonth}
+            />
+            <Footer selectedType={selectedType} />
 
-        </SelectedDatesContext.Provider>
-      </div>
+          </SelectedDatesContext.Provider>
+        </div>
+      </Fragment>
     );
   }
 }
