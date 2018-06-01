@@ -13,9 +13,13 @@ import {
 } from './page.styles';
 import './App.css';
 
-const Search = Icons.Search;
+const { Search } = Icons;
 
-class Page extends Component {
+type State = {
+    calendarVisible: bool
+}
+
+class Page extends Component<null, State> {
     state={
       calendarVisible: false,
     }
@@ -38,7 +42,7 @@ class Page extends Component {
                 <span style={{ marginRight: '10px' }}>
                   <Typography>Departure - Return</Typography>
                 </span>
-                <Button Icon={Search} onlyIcon />
+                <Button Icon={Search} onlyIcon onClick={() => {}} />
               </RightContent>
             </Inputs>
           :
