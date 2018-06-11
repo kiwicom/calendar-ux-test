@@ -10,6 +10,8 @@ type DateType = {
   end: Moment | null
 }
 
+export type changeDateTypes = 'anytime' | 'month' | 'subtract' | 'add' | "clean" | "start" | "end";
+
 const initialState = {
   selectedType: DEPARTURE,
   currentMonth: moment(),
@@ -42,10 +44,6 @@ export type State = {
   range: [],
 };
 
-export type SearchStateType = State & {
-  changeSearchText: (searchText: string) => void,
-};
-
 export const SelectedDates = React.createContext({
   ...initialState,
   nextMonth: () => {},
@@ -55,84 +53,84 @@ export const SelectedDates = React.createContext({
 class SelectedDatesProvider extends React.Component<Props, State> {
   state = initialState;
 
-    changeDate = (type: string, date: any) => {
-    // TODO: refactor this
-      const { selectedType } = this.state;
-      const { start, end }:{start: Moment, end: Moment} = selectedType === DEPARTURE ?
-        this.state.departureDate : this.state.returnDate;
+  changeDate = (type: changeDateTypes, date: any) => {
+  // TODO: refactor this
+    const { selectedType } = this.state;
+    const { start, end }:{start: Moment, end: Moment} = selectedType === DEPARTURE ?
+      this.state.departureDate : this.state.returnDate;
 
-      if (type === 'anytime') {
-        this.setState({
-          [selectedType]: {
-            anytime: true,
-            start: null,
-            end: null,
-          },
-        });
-      }
-      if (type === 'month') {
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-            start: date.clone().startOf('month'),
-            end: date.clone().endOf('month'),
-          },
-        });
-      }
-      if (type === 'subtract') {
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-            start: start.clone().subtract(1, 'day'),
-            end,
-          },
-        });
-      }
-      if (type === 'add') {
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-
-            start,
-            end: end.clone().add(1, 'day'),
-          },
-        });
-      }
-      if (type === 'clean') {
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-            start: date,
-            end: date.clone(),
-          },
-        });
-      }
-      if (type === 'start') {
-        let newEnd = end;
-        if (end.isBefore(date)) {
-          newEnd = date.clone().add(1, 'day');
-        }
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-            start: date,
-            end: newEnd,
-          },
-        });
-      }
-      if (type === 'end') {
-        if (date.isBefore(start)) {
-          return;
-        }
-        this.setState({
-          [selectedType]: {
-            anytime: false,
-            start,
-            end: date,
-          },
-        });
-      }
+    if (type === 'anytime') {
+      this.setState({
+        [selectedType]: {
+          anytime: true,
+          start: null,
+          end: null,
+        },
+      });
     }
+    if (type === 'month') {
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+          start: date.clone().startOf('month'),
+          end: date.clone().endOf('month'),
+        },
+      });
+    }
+    if (type === 'subtract') {
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+          start: start.clone().subtract(1, 'day'),
+          end,
+        },
+      });
+    }
+    if (type === 'add') {
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+
+          start,
+          end: end.clone().add(1, 'day'),
+        },
+      });
+    }
+    if (type === 'clean') {
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+          start: date,
+          end: date.clone(),
+        },
+      });
+    }
+    if (type === 'start') {
+      let newEnd = end;
+      if (end.isBefore(date)) {
+        newEnd = date.clone().add(1, 'day');
+      }
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+          start: date,
+          end: newEnd,
+        },
+      });
+    }
+    if (type === 'end') {
+      if (date.isBefore(start)) {
+        return;
+      }
+      this.setState({
+        [selectedType]: {
+          anytime: false,
+          start,
+          end: date,
+        },
+      });
+    }
+  }
 
   changeSelectedType = (selectedType: string) => {
     this.setState({

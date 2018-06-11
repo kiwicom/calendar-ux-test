@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React, { Component, Fragment } from 'react';
 import { Typography, Button, Icons } from '@kiwicom/orbit-components';
 
 import App from './App';
@@ -20,7 +20,7 @@ type State = {
     calendarVisible: bool
 }
 
-class Page extends React.Component<null, State> {
+class Page extends Component<null, State> {
     state={
       calendarVisible: false,
     }
@@ -35,7 +35,7 @@ class Page extends React.Component<null, State> {
         <Container>
           <SelectedDatesProvider>
             {!calendarVisible ?
-              <React.Fragment>
+              <Fragment>
                 <Title>Travelanywhere</Title>
                 <Inputs onClick={this.showCalendar}>
                   <Typography size="large" type="secondary">Try Sightseeing Europe</Typography>
@@ -51,7 +51,7 @@ class Page extends React.Component<null, State> {
                 <p style={{ marginTop: '15px' }}>
                   <Typography size="large">Search Flights, trains & buses from Brno, Prague and Vienna</Typography>
                 </p>
-              </React.Fragment>
+              </Fragment>
           :
               <App />
           }

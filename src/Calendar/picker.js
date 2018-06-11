@@ -4,6 +4,8 @@ import moment from 'moment';
 import type Moment from 'moment';
 import { Typography } from '@kiwicom/orbit-components';
 
+import { type changeDateTypes } from '../context/SelectedDates';
+
 import Day from './Day';
 
 import {
@@ -31,7 +33,7 @@ type State = {
 type Props = {
   date: any,
   activeDates: any,
-  changeDate: (type: string, date: any) => void
+  changeDate: (type: changeDateTypes, date: any) => void
 }
 
 class Calendar extends React.Component<Props, State> {
