@@ -6,6 +6,7 @@
   "dependencies": {
     "@kiwicom/orbit-components": "^0.0.0-rc7",
     "moment": "^2.22.1",
+    "rc-slider": "^8.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",

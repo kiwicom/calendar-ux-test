@@ -13,6 +13,7 @@ import RightImg from '../img/right.svg';
 import LeftImg from '../img/left.svg';
 
 // TODO: invastigate why you cannot change component while Draging..
+// a solution would be to save this into context
 // HACK
 let dragType = 'end';
 
@@ -20,8 +21,7 @@ type Props = {
     item: any,
     dayInTheWeek: number,
     activeDates: any,
-    month: number,
-    isToday: bool
+    month: number
 }
 
 type State = {
@@ -81,19 +81,20 @@ class Day extends PureComponent<Props, State> {
     const {
       dayInTheWeek,
       activeDates,
-      isToday,
       item,
       month,
     } = this.props;
     const {
       past,
     } = this.state;
+
     let active = false;
     let isFirstDay = false;
     let isLast = false;
+
     if (activeDates.start && activeDates.end) {
-      const start = activeDates.start.clone().startOf('day');
-      const end = activeDates.end.clone().endOf('day');
+      const start = activeDates.start.startOf('day');
+      const end = activeDates.end.endOf('day');
 
       active = item.date.isBetween(start, end);
       isFirstDay = item.date.isSame(start, 'day');
@@ -125,7 +126,7 @@ class Day extends PureComponent<Props, State> {
                 past={past}
               />
             </DayContentContainer>
-            { !isToday && isFirstDay ? (
+            { !item.isToday && isFirstDay ? (
               <DayDrag onClick={this.addPreviousDay}>
                 <DragIcon src={LeftImg} />
               </DayDrag>

@@ -1,0 +1,12 @@
+.rc-slider-handle {
+    width: 24px;
+    height: 24px;
+    background: #0176d2;
+    border: 4px solid white;
+    margin-top: -10px;
+    margin-left: -12px;
+    box-shadow: 0 2px 4px 0 #bac7d5;
+}
+.rc-slider-track {
+    background-color: #0176d2;
+}

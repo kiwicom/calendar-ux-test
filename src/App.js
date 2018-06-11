@@ -6,6 +6,7 @@ import type Moment from 'moment';
 import SelectedDatesContext from './context/SelectedDates';
 
 import Calendar from './Calendar';
+import Range from './Range';
 import Inputs from './Inputs';
 import Footer from './Footer';
 import CalendarNavigation from './Calendar/Navigation';
@@ -177,11 +178,12 @@ class App extends Component<Props, State> {
               changeSelectedType={this.changeSelectedType}
               changeDate={this.changeDate}
             />
-            <Calendar />
+            {/* <Calendar />
             <CalendarNavigation
               prevMonth={this.prevMonth}
               nextMonth={this.nextMonth}
-            />
+            /> */}
+            <Range />
             <Footer selectedType={selectedType} />
 
           </SelectedDatesContext.Provider>

@@ -87,7 +87,6 @@ class Calendar extends React.Component<Props, State> {
       dayInTheWeek={this.state.dayInTheWeek}
       activeDates={this.props.activeDates}
       month={this.state.month}
-      isToday={item.isToday}
     />
   )
   render() {
