@@ -5,7 +5,7 @@ import type Moment from 'moment';
 
 import DayContent from './DayContent';
 
-import SelectedDates from '../context/SelectedDates';
+import { SelectedDates } from '../context/SelectedDates';
 
 import { DayContainer, DayContentContainer, DayDrag, DragIcon } from './styles';
 

@@ -1,6 +1,9 @@
 /* @flow */
 import React, { Component } from 'react';
 import { Typography } from '@kiwicom/orbit-components';
+import type Moment from 'moment';
+
+import { SelectedDates } from '../context/SelectedDates';
 
 import { Container, InputContainer, AnyTimeIcon } from './styles';
 
@@ -8,19 +11,7 @@ import anyTimeIcon from '../img/anytime.svg';
 
 import { DEPARTURE, RETURN } from '../constants';
 
-type State = {
-    departureString: string,
-    returnString: string
-}
-type Props = {
-    departureDate: any,
-    returnDate: any,
-    selectedType: string,
-    changeSelectedType: (type: string) => void,
-    changeDate: (type: string) => void
-}
-
-function getDateString(date) {
+function getDateString(date: Moment) {
   let dateString = 'Set a date';
   if (date.start && date.end) {
     const returnStart = date.start.format('ddd DD MMM');
@@ -37,39 +28,29 @@ function getDateString(date) {
   return dateString;
 }
 
-class Inputs extends Component<Props, State> {
-    state = {
-      departureString: '',
-      returnString: '',
-    }
-    static getDerivedStateFromProps(props: Props) {
-      const { departureDate, returnDate } = props;
-      const departureString = getDateString(departureDate);
-      const returnString = getDateString(returnDate);
-
-      return {
-        departureString,
-        returnString,
-      };
-    }
-    checkifActive = (type: string) => type === this.props.selectedType
+class Inputs extends Component<{}> {
+    departureDate = {};
+    returnDate = {};
+    selectedType = '';
+    changeDate = (type: string) => {}; // eslint-disable-line no-unused-vars
+    changeSelectedType = (type: string) => {}; // eslint-disable-line no-unused-vars
+    checkifActive = (type: string) => type === this.selectedType
     selectAnytime = () => {
-      this.props.changeDate('anytime');
+      this.changeDate('anytime');
     }
-    render() {
-      const { selectedType } = this.props;
-      const { start } = this.props[selectedType];
+    renderInputs = (selectedType: string) => {
+      const { start } = selectedType === DEPARTURE ? this.departureDate : this.returnDate;
+
       const departureActive = this.checkifActive(DEPARTURE);
       const returnActive = this.checkifActive(RETURN);
-
       return (
         <Container>
           <InputContainer
-            onClick={() => this.props.changeSelectedType(DEPARTURE)}
+            onClick={() => this.changeSelectedType(DEPARTURE)}
             active={departureActive}
           >
             <Typography size="small">Departure</Typography><br />
-            <Typography size="large">{this.state.departureString}</Typography>
+            <Typography size="large">{getDateString(this.departureDate)}</Typography>
             {departureActive && start ?
               <AnyTimeIcon
                 onClick={this.selectAnytime}
@@ -78,11 +59,11 @@ class Inputs extends Component<Props, State> {
             : null}
           </InputContainer>
           <InputContainer
-            onClick={() => this.props.changeSelectedType(RETURN)}
+            onClick={() => this.changeSelectedType(RETURN)}
             active={returnActive}
           >
             <Typography size="small">Return</Typography><br />
-            <Typography size="large">{this.state.returnString}</Typography>
+            <Typography size="large">{getDateString(this.returnDate)}</Typography>
             {returnActive && start ?
               <AnyTimeIcon
                 onClick={this.selectAnytime}
@@ -95,6 +76,27 @@ class Inputs extends Component<Props, State> {
             <Typography size="large">4-6 nights</Typography>
           </InputContainer>
         </Container>
+      );
+    }
+    render() {
+      return (
+        <SelectedDates.Consumer>
+          {({
+            selectedType,
+            changeDate,
+            departureDate,
+            returnDate,
+            changeSelectedType,
+          }) => {
+            this.changeDate = changeDate;
+            this.changeSelectedType = changeSelectedType;
+            this.selectedType = selectedType;
+            this.departureDate = departureDate;
+            this.returnDate = returnDate;
+
+            return this.renderInputs(selectedType);
+          }}
+        </SelectedDates.Consumer>
       );
     }
 }

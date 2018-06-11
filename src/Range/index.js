@@ -7,7 +7,7 @@ import 'rc-slider/assets/index.css';
 import './slider.css';
 import { Title, Container, Content, RangeContainer } from './styles';
 
-class RangeComponent extends Component {
+class RangeComponent extends Component<{}> {
     changeRange = (change) => {
       console.log(change);
     }

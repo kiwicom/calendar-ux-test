@@ -2,7 +2,7 @@
 import React from 'react';
 import Picker from './Picker';
 
-import SelectedDates from '../context/SelectedDates';
+import { SelectedDates } from '../context/SelectedDates';
 import { RETURN } from '../constants';
 
 import { CalendarWraper } from './styles';

@@ -5,6 +5,8 @@ import {
   Typography,
 } from '@kiwicom/orbit-components';
 
+import { SelectedDates } from '../context/SelectedDates';
+
 import {
   Container,
   Search,
@@ -17,11 +19,7 @@ import { DEPARTURE } from '../constants';
 
 import anyTimeImg from '../img/anytime.svg';
 
-type Props = {
-  selectedType: string
-}
-
-const Footer = ({ selectedType }: Props) => (
+const Footer = () => (
   <Container>
     <DescContainer>
       <DateIcon src={anyTimeImg} />
@@ -32,12 +30,12 @@ const Footer = ({ selectedType }: Props) => (
     <Search>
       <Desc>
         <Typography size="small" type="secondary">
-
-          {selectedType === DEPARTURE ?
-            'Showing prices for Vienna -> Paris'
-            :
-            'Showing prices for Paris -> Vienna'
-          }
+          <SelectedDates.Consumer>
+            {({ selectedType }) => (selectedType === DEPARTURE ?
+                          'Showing prices for Vienna -> Paris'
+                          :
+                          'Showing prices for Paris -> Vienna')}
+          </SelectedDates.Consumer>
         </Typography>
       </Desc>
       <Button title="Done" onClick={() => {}} />
