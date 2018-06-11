@@ -1,6 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import moment from 'moment';
+import type Moment from 'moment';
 import { Typography } from '@kiwicom/orbit-components';
 
 import Day from './Day';
@@ -44,26 +45,36 @@ class Calendar extends React.Component<Props, State> {
     const month = date.clone();
     const daysInMonth = month.daysInMonth();
     const dayInTheWeek = month.startOf('month').isoWeekday();
+    const daysArray: number[] = Array.from(Array(daysInMonth).keys());
+
     // If month didnt change dont rerander
     if (month.month() === state.month) {
       return null;
     }
+
+    const days: {
+      day: number,
+      date: Moment,
+      price: number,
+      isToday:bool
+    }[] = daysArray
+      .map((item) => {
+        const day = item + 1;
+        const dayDate = props.date.clone().date(day);
+        const price = Math.floor(Math.random() * 1000);
+
+        return {
+          day,
+          date: dayDate,
+          price,
+          isToday: dayDate.isSame(moment(), 'day'),
+        };
+      });
+
     return {
       month: month.month(),
       dayInTheWeek,
-      days: Array.from(Array(daysInMonth).keys())
-        .map((item) => {
-          const day = item + 1;
-          const dayDate = props.date.clone().date(day);
-          const price = Math.floor(Math.random() * 1000);
-
-          return {
-            day,
-            date: dayDate,
-            price,
-            isToday: dayDate.isSame(moment(), 'day'),
-          };
-        }),
+      days,
     };
   }
   selectWholeMonth= () => {

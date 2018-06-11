@@ -1,6 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react';
 import moment from 'moment';
+import type Moment from 'moment';
+
 import DayContent from './DayContent';
 
 import SelectedDates from '../context/SelectedDates';
@@ -28,7 +30,6 @@ type State = {
 }
 
 class Day extends PureComponent<Props, State> {
-  changeDate = () => {}
   constructor(props: Props) {
     super(props);
     const {
@@ -40,6 +41,7 @@ class Day extends PureComponent<Props, State> {
       past: day.isBefore(moment().startOf('day')),
     };
   }
+  changeDate = (type: string, newDate: Moment) => {} // eslint-disable-line no-unused-vars
   selectDate = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     const { item } = this.props;
@@ -57,7 +59,7 @@ class Day extends PureComponent<Props, State> {
       if (past.value === 'true') {
         return;
       }
-      this.setState({ id });
+      this.setState({ id: id.value });
       const date = id.value.split('-');
       const newDate = moment().date(date[0]).month(date[1]).startOf('day');
       this.changeDate(dragType, newDate);

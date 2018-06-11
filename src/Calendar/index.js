@@ -11,7 +11,11 @@ const Calendar = () => (
   <SelectedDates.Consumer>
     {(selectedDates) => {
         const {
-          currentMonth, selectedType, departureDate, returnDate, changeDate,
+          currentMonth,
+          selectedType,
+          departureDate,
+          returnDate,
+          changeDate,
         } = selectedDates;
         const nextMonth = currentMonth.clone().add(1, 'month');
         let activeDates = departureDate;

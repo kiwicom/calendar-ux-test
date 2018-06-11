@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
+import type Moment from 'moment';
 
 import SelectedDatesContext from './context/SelectedDates';
 
@@ -15,16 +16,16 @@ import { DEPARTURE } from './constants';
 
 type State = {
   selectedType: string,
-  currentMonth: any,
+  currentMonth: Moment,
   departureDate: {|
     anytime: bool,
-    start: Object | null,
-    end: Object| null
+    start: Moment | null,
+    end: Moment| null
   |},
   returnDate: {|
     anytime: bool,
-    start: Object | null,
-    end: Object| null
+    start: Moment | null,
+    end: Moment| null
   |},
 }
 
