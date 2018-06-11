@@ -2,13 +2,13 @@
 import React, { Fragment } from 'react';
 
 import Calendar from './Calendar';
-// import Range from './Range';
+import Range from './Range';
 import Inputs from './Inputs';
 import Footer from './Footer';
 import CalendarNavigation from './Calendar/Navigation';
 
 import { SelectedDates } from './context/SelectedDates';
-import { DEPARTURE } from './constants';
+import { DEPARTURE, RANGE } from './constants';
 
 import { Title } from './page.styles';
 
@@ -23,8 +23,14 @@ const App = () => (
         }
         <div className="App">
           <Inputs />
-          <Calendar />
-          <CalendarNavigation />
+          {selectedType === RANGE ?
+            <Range />
+            :
+            <Fragment>
+              <Calendar />
+              <CalendarNavigation />
+            </Fragment>
+          }
           <Footer />
         </div>
       </Fragment>

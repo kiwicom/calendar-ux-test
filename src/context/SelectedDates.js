@@ -15,6 +15,7 @@ export type changeDateTypes = 'anytime' | 'month' | 'subtract' | 'add' | "clean"
 const initialState = {
   selectedType: DEPARTURE,
   currentMonth: moment(),
+  selectedRange: [4, 6],
   departureDate: {
     anytime: false,
     start: moment(),
@@ -39,15 +40,16 @@ export type State = {
   currentMonth: Moment,
   departureDate: DateType,
   returnDate: DateType,
+  selectedRange: number[],
   changeDate: (type: string, date: Moment) => void, // eslint-disable-line no-unused-vars
-  changeSelectedType: (type: string) => void,
-  range: [],
+  changeSelectedType: (type: string) => void
 };
 
 export const SelectedDates = React.createContext({
   ...initialState,
   nextMonth: () => {},
   prevMonth: () => {},
+  changeRange: () => {},
 });
 
 class SelectedDatesProvider extends React.Component<Props, State> {
@@ -138,6 +140,20 @@ class SelectedDatesProvider extends React.Component<Props, State> {
     });
   }
 
+  changeRange = (selectedRange: number[]) => {
+    const { start }: Moment = this.state.departureDate;
+    const { end }: Moment = this.state.departureDate;
+    const returnDate = {
+      anytime: false,
+      start: start.clone().add(selectedRange[0], 'days'),
+      end: end.clone().add(selectedRange[1], 'days'),
+    };
+    this.setState({
+      selectedRange,
+      returnDate,
+    });
+  }
+
   nextMonth = () => {
     const { currentMonth } = this.state;
     const nextMonth = currentMonth.clone().add(1, 'month');
@@ -155,7 +171,7 @@ class SelectedDatesProvider extends React.Component<Props, State> {
   }
   render() {
     const {
-      selectedType, currentMonth, departureDate, returnDate,
+      selectedType, currentMonth, departureDate, returnDate, selectedRange,
     } = this.state;
 
     return (
@@ -165,10 +181,12 @@ class SelectedDatesProvider extends React.Component<Props, State> {
           currentMonth,
           departureDate,
           returnDate,
+          selectedRange,
           nextMonth: this.nextMonth,
           prevMonth: this.prevMonth,
           changeSelectedType: this.changeSelectedType,
           changeDate: this.changeDate,
+          changeRange: this.changeRange,
        }}
       >
         {this.props.children}

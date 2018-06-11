@@ -9,7 +9,7 @@ import { Container, InputContainer, AnyTimeIcon } from './styles';
 
 import anyTimeIcon from '../img/anytime.svg';
 
-import { DEPARTURE, RETURN } from '../constants';
+import { DEPARTURE, RETURN, RANGE } from '../constants';
 
 function getDateString(date: Moment) {
   let dateString = 'Set a date';
@@ -32,17 +32,19 @@ class Inputs extends Component<{}> {
     departureDate = {};
     returnDate = {};
     selectedType = '';
+    selectedRange = [];
     changeDate = (type: string) => {}; // eslint-disable-line no-unused-vars
     changeSelectedType = (type: string) => {}; // eslint-disable-line no-unused-vars
     checkifActive = (type: string) => type === this.selectedType
     selectAnytime = () => {
       this.changeDate('anytime');
     }
-    renderInputs = (selectedType: string) => {
-      const { start } = selectedType === DEPARTURE ? this.departureDate : this.returnDate;
-
+    renderInputs = () => {
+      const { start } = this.selectedType === DEPARTURE ? this.departureDate : this.returnDate;
+      const range = this.selectedRange;
       const departureActive = this.checkifActive(DEPARTURE);
       const returnActive = this.checkifActive(RETURN);
+      const rangeActive = this.checkifActive(RANGE);
       return (
         <Container>
           <InputContainer
@@ -71,9 +73,12 @@ class Inputs extends Component<{}> {
               />
             : null}
           </InputContainer>
-          <InputContainer>
+          <InputContainer
+            onClick={() => this.changeSelectedType(RANGE)}
+            active={rangeActive}
+          >
             <Typography size="small">Length of your stay</Typography><br />
-            <Typography size="large">4-6 nights</Typography>
+            <Typography size="large">{range[0]} - {range[1]} nights</Typography>
           </InputContainer>
         </Container>
       );
@@ -87,14 +92,16 @@ class Inputs extends Component<{}> {
             departureDate,
             returnDate,
             changeSelectedType,
+            selectedRange,
           }) => {
             this.changeDate = changeDate;
             this.changeSelectedType = changeSelectedType;
             this.selectedType = selectedType;
             this.departureDate = departureDate;
             this.returnDate = returnDate;
+            this.selectedRange = selectedRange;
 
-            return this.renderInputs(selectedType);
+            return this.renderInputs();
           }}
         </SelectedDates.Consumer>
       );
