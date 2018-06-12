@@ -19,10 +19,8 @@ const DayContent = ({ item, active, past }: Props) => {
     price,
   } = item;
   let type = 'active';
-  if (price > 400 && price < 700) {
+  if (price > 600) {
     type = 'secondary';
-  } else if (price > 700) {
-    type = 'error';
   }
 
   let content = (

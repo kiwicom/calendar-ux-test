@@ -119,6 +119,8 @@ class Day extends PureComponent<Props, State> {
               data-isfirst={isFirstDay}
               onDragStart={this.dragStart}
               active={active}
+              isFirst={isFirstDay}
+              isLast={isLast}
             >
               <DayContent
                 item={item}

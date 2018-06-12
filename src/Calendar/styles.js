@@ -35,7 +35,14 @@ export const Container = styled.div`
 export const DaysContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 50px);
-    grid-template-rows: 25px;
+    grid-template-rows: 35px;
+`;
+export const DayName = styled.div`
+    height: 50px;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 10px;
+    border: solid 1px transparent;
 `;
 
 export const CalendarContainer = styled.div`
@@ -45,13 +52,17 @@ export const CalendarContainer = styled.div`
 `;
 
 export const MonthContainer = styled.div`
+    display: flex;
+    flex: 1;
     cursor: pointer;
-    margin: 25px 0;
+    margin: 15px 0 0;
+    justify-content: center;
+    align-items: center;
 `;
 export const MonthButton = styled.div`
     display:inline;
     border-radius: 3px;
-    padding: 10px 15px;
+    padding: 7px 15px;
     background-color: #f5f7f9;
 `;
 
@@ -68,27 +79,43 @@ export const DayContentContainer = styled.div`
     cursor: pointer;
     text-align: center;
     padding-top: 10px;
+    border: solid 1px transparent;
+    ${props => (props.isFirst ?
+    'border-top-left-radius: 3px;border-bottom-left-radius: 3px;' :
+    '')}
+    ${props => (props.isLast ?
+    'border-top-right-radius: 3px;border-bottom-right-radius: 3px;' :
+    '')}
     ${props => (props.active ?
     'background-color:#0176d2;color: white;'
+    : '')}
+    ${props => (!props.active && !props.past ?
+    `&:hover {
+        border-radius: 3px;
+        background-color: #fcffff;
+        border-color: #0176d2;
+    }`
     : '')}
 `;
 export const DayDrag = styled.div`
     z-index: 10;
     position: absolute;
-    height: 22px;
-    width:11px;
+    height: 40px;
+    width:12px;
     top: 50%;
     text-align:center;
     color: white;
     cursor: pointer;
     border-radius: 2px;
     ${props => (props.last ?
-    'right: -7px;'
-    : 'left: -7px;'
+    'right: -5px;'
+    :
+    'left: -5px;'
   )}
-    margin-top: -10px;
+    margin-top: -20px;
     background: #46515e
 `;
 
 export const DragIcon = styled.img`
+    margin-top: 16px;
 `;

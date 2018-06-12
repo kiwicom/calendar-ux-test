@@ -10,9 +10,9 @@ import Day from './Day';
 
 import {
   Container,
-  DaysContainer,
   CalendarContainer,
-  DayContentContainer,
+  DaysContainer,
+  DayName,
   MonthButton,
   MonthContainer,
 } from './styles';
@@ -102,13 +102,15 @@ class Calendar extends React.Component<Props, State> {
           </MonthButton>
         </MonthContainer>
         <DaysContainer>
-          <DayContentContainer><Typography size="small" type="secondary">M</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">T</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">W</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">T</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">F</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">S</Typography></DayContentContainer>
-          <DayContentContainer><Typography size="small" type="secondary">S</Typography></DayContentContainer>
+          <DayName>
+            <Typography size="small" type="secondary">M</Typography>
+          </DayName>
+          <DayName><Typography size="small" type="secondary">T</Typography></DayName>
+          <DayName><Typography size="small" type="secondary">W</Typography></DayName>
+          <DayName><Typography size="small" type="secondary">T</Typography></DayName>
+          <DayName><Typography size="small" type="secondary">F</Typography></DayName>
+          <DayName><Typography size="small" type="secondary">S</Typography></DayName>
+          <DayName><Typography size="small" type="secondary">S</Typography></DayName>
         </DaysContainer>
         <CalendarContainer>
           {days.map(this.renderDay)}
