@@ -28,7 +28,7 @@ const Footer = () => (
             {selectedType !== RANGE ? (
               <Fragment>
                 <DateIcon src={anyTimeImg} />
-                <Typography size="small" type="secondary">
+                <Typography size="normal" type="secondary">
                   Click for reset to Anytime
                 </Typography>
               </Fragment>)
@@ -37,13 +37,14 @@ const Footer = () => (
           </DescContainer>
           <Search>
             <Desc>
-              <Typography size="small" type="secondary">
+              <Typography size="normal" type="secondary">
                 {selectedType === DEPARTURE ?
-                'Showing prices for Vienna -> Paris'
+                'Showing prices for Vienna -> Paris '
                 :
-                'Showing prices for Paris -> Vienna'
+                'Showing prices for Paris -> Vienna '
               }
               </Typography>
+              <Typography size="normal" type="active">$341</Typography>
             </Desc>
             <Button title="Done" onClick={() => {}} />
           </Search>

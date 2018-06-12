@@ -141,16 +141,18 @@ class SelectedDatesProvider extends React.Component<Props, State> {
   }
 
   changeRange = (selectedRange: number[]) => {
-    const { start }: Moment = this.state.departureDate;
-    const { end }: Moment = this.state.departureDate;
-    const returnDate = {
-      anytime: false,
-      start: start.clone().add(selectedRange[0], 'days'),
-      end: end.clone().add(selectedRange[1], 'days'),
-    };
+    // Maybe will be used later auto canges ReturnDate
+    //
+    // const { start }: Moment = this.state.departureDate;
+    // const { end }: Moment = this.state.departureDate;
+    // const returnDate = {
+    //   anytime: false,
+    //   start: start.clone().add(selectedRange[0], 'days'),
+    //   end: end.clone().add(selectedRange[1], 'days'),
+    // };
     this.setState({
       selectedRange,
-      returnDate,
+      // returnDate,
     });
   }
 
