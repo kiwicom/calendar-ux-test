@@ -21,5 +21,5 @@ export const DateIcon = styled.img`
 `;
 export const DescContainer = styled.div`
     display: flex;
-    justifyContent: "center"
+    align-items: center;
 `;
