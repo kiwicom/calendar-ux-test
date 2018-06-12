@@ -22,22 +22,25 @@ import anyTimeImg from '../img/anytime.svg';
 const Footer = () => (
   <Container>
     <SelectedDates.Consumer>
-      {({ selectedType }) => (
-        <Fragment>
-          <DescContainer>
-            {selectedType !== RANGE ? (
-              <Fragment>
-                <DateIcon src={anyTimeImg} />
-                <Typography size="normal" type="secondary">
+      {(selectedDates) => {
+        const { selectedType } = selectedDates;
+        const activeType = selectedDates[selectedType];
+        return (
+          <Fragment>
+            <DescContainer>
+              {!activeType.anytime && selectedType !== RANGE ? (
+                <Fragment>
+                  <DateIcon src={anyTimeImg} />
+                  <Typography size="normal" type="secondary">
                   Click for reset to Anytime
-                </Typography>
-              </Fragment>)
+                  </Typography>
+                </Fragment>)
               : null
             }
-          </DescContainer>
-          <Search>
-            <Desc>
-              {selectedType === RANGE ?
+            </DescContainer>
+            <Search>
+              <Desc>
+                {selectedType === RANGE ?
                 (
                   <Fragment>
                     <Typography size="normal">{'Search trips Paris -> Vienna from '}</Typography>
@@ -52,11 +55,12 @@ const Footer = () => (
                 'Showing prices in $USD for Paris -> Vienna '
                 }
                 </Typography>)}
-            </Desc>
-            <Button title="Done" onClick={() => {}} />
-          </Search>
-        </Fragment>
-        )}
+              </Desc>
+              <Button title="Done" onClick={() => {}} />
+            </Search>
+          </Fragment>
+        );
+}}
     </SelectedDates.Consumer>
   </Container>
 );
