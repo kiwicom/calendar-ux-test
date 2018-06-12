@@ -28,7 +28,8 @@ const Footer = () => (
         return (
           <Fragment>
             <DescContainer>
-              {!activeType.anytime && selectedType !== RANGE ? (
+              {/* RANGE DOESNT HAVE ACTIVETYPE */}
+              {activeType && !activeType.anytime ? (
                 <Fragment>
                   <DateIcon src={anyTimeImg} />
                   <Typography size="normal" type="secondary">
