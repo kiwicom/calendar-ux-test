@@ -1,6 +1,7 @@
 // @flow
 import React, { Fragment } from 'react';
 
+import Title from './Calendar/Title';
 import Calendar from './Calendar';
 import Range from './Range';
 import Inputs from './Inputs';
@@ -8,19 +9,13 @@ import Footer from './Footer';
 import CalendarNavigation from './Calendar/Navigation';
 
 import { SelectedDates } from './context/SelectedDates';
-import { DEPARTURE, RANGE } from './constants';
-
-import { Title } from './page.styles';
+import { RANGE } from './constants';
 
 const App = () => (
   <SelectedDates.Consumer>
     {({ selectedType }) => (
       <Fragment>
-        {selectedType === DEPARTURE ?
-          <Title>Set a departure date</Title>
-                  :
-          <Title>Set a return date</Title>
-        }
+        <Title selectedType={selectedType} />
         <div className="App">
           <Inputs />
           {selectedType === RANGE ?
