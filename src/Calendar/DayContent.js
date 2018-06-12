@@ -26,14 +26,14 @@ const DayContent = ({ item, active, past }: Props) => {
   let content = (
     <div>
       <Typography size="large">{day}</Typography><br />
-      <Typography size="small" type={type}>{`$${price}`}</Typography>
+      <Typography size="small" type={type}>{`${price}`}</Typography>
     </div>
   );
   if (active) {
     content = (
       <div>
         <DateTypography>{day}</DateTypography><br />
-        <DateTypography fontSize="12px">{`$${price}`}</DateTypography>
+        <DateTypography fontSize="12px">{`${price}`}</DateTypography>
       </div>
     );
   }

@@ -37,14 +37,21 @@ const Footer = () => (
           </DescContainer>
           <Search>
             <Desc>
-              <Typography size="normal" type="secondary">
-                {selectedType === DEPARTURE ?
-                'Showing prices for Vienna -> Paris '
+              {selectedType === RANGE ?
+                (
+                  <Fragment>
+                    <Typography size="normal">{'Search trips Paris -> Vienna from '}</Typography>
+                    <Typography size="normal" type="active">$341</Typography>
+                  </Fragment>)
+              :
+              (
+                <Typography size="normal" type="secondary">
+                  {selectedType === DEPARTURE ?
+                    'Showing prices in $USD for Vienna -> Paris '
                 :
-                'Showing prices for Paris -> Vienna '
-              }
-              </Typography>
-              <Typography size="normal" type="active">$341</Typography>
+                'Showing prices in $USD for Paris -> Vienna '
+                }
+                </Typography>)}
             </Desc>
             <Button title="Done" onClick={() => {}} />
           </Search>

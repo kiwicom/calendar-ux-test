@@ -36,7 +36,7 @@ class Page extends Component<null, State> {
           <SelectedDatesProvider>
             {!calendarVisible ?
               <Fragment>
-                <Title>Travelanywhere</Title>
+                <Title>Travel anywhere</Title>
                 <Inputs onClick={this.showCalendar}>
                   <Typography size="large" type="secondary">Try Sightseeing Europe</Typography>
                   <RightContent>

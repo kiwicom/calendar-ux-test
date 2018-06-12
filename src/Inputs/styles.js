@@ -35,6 +35,7 @@ export const LengthContainer = styled.div`
     display: flex;
     flex: 1;
     align-items: center;
+    justify-content: space-between;
     height: 40px;
     cursor: pointer;
     margin-top: 10px;

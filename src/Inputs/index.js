@@ -14,6 +14,7 @@ import {
 } from './styles';
 
 import anyTimeIcon from '../img/anytime.svg';
+import arrowsIcon from '../img/arrows.svg';
 
 import { DEPARTURE, RETURN, RANGE } from '../constants';
 
@@ -126,6 +127,13 @@ class Inputs extends Component<{}, State> {
               <Typography size="large" type={!rangeClicked ? 'secondary' : 'attention'}>
                 {range[0]} - {range[1]} nights
               </Typography>
+              {!rangeActive ?
+                <AnyTimeIcon
+                  src={arrowsIcon}
+                />
+              :
+                null
+              }
             </LengthContainer>
           </Content>
         </Container>
