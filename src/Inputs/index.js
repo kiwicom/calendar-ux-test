@@ -65,18 +65,20 @@ class Inputs extends Component<{}, State> {
     }
     renderInputs = () => {
       let { returnClicked, rangeClicked } = this.state;
-      const { start } = this.selectedType === DEPARTURE ?
-        this.departureDate
-        :
-        this.returnDate;
-      const range = this.selectedRange;
       const departureActive = this.checkifActive(DEPARTURE);
       const returnActive = this.checkifActive(RETURN);
       const rangeActive = this.checkifActive(RANGE);
-      if (this.selectedType === RETURN) {
+      const range = this.selectedRange;
+
+      const { start } = departureActive ?
+        this.departureDate
+        :
+        this.returnDate;
+
+      if (returnActive) {
         rangeClicked = false;
       }
-      if (this.selectedType === RANGE) {
+      if (rangeActive) {
         returnClicked = false;
       }
       return (
@@ -86,7 +88,6 @@ class Inputs extends Component<{}, State> {
             <InputContainer
               onClick={() => this.typeChanged(DEPARTURE)}
               active={departureActive}
-              clicked
             >
               <Typography size="large">
                 {getDateString(this.departureDate)}
@@ -103,7 +104,7 @@ class Inputs extends Component<{}, State> {
             <Heading size="small">Return</Heading>
             <InputContainer
               onClick={() => this.typeChanged(RETURN)}
-              clicked={this.state.returnClicked}
+              active={returnActive}
             >
               <Typography size="large" type={!returnClicked ? 'secondary' : 'attention'}>
                 {getDateString(this.returnDate)}
