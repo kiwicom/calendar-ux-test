@@ -25,6 +25,8 @@ export const InputContainer = styled.div`
     border-radius: 3px;
     background-color: #ffffff;
     border: solid 1px #bac7d5;
+    ${props => (props.clicked ? `
+    ` : '')}
     ${props => (props.active ? `
         background-color: rgba(224, 246, 255, 0.16);
         border: solid 2px #0176d2;

@@ -34,7 +34,16 @@ function getDateString(date: Moment) {
   return dateString;
 }
 
-class Inputs extends Component<{}> {
+type State = {
+  returnClicked: bool,
+  rangeClicked: bool
+}
+
+class Inputs extends Component<{}, State> {
+    state = {
+      returnClicked: false,
+      rangeClicked: false,
+    };
     departureDate = {};
     returnDate = {};
     selectedType = '';
@@ -45,21 +54,43 @@ class Inputs extends Component<{}> {
     selectAnytime = () => {
       this.changeDate('anytime');
     }
+    typeChanged = (type: string) => {
+      if (type === RETURN) {
+        this.setState({ returnClicked: true, rangeClicked: false });
+      }
+      if (type === RANGE) {
+        this.setState({ rangeClicked: true, returnClicked: false });
+      }
+      this.changeSelectedType(type);
+    }
     renderInputs = () => {
-      const { start } = this.selectedType === DEPARTURE ? this.departureDate : this.returnDate;
+      let { returnClicked, rangeClicked } = this.state;
+      const { start } = this.selectedType === DEPARTURE ?
+        this.departureDate
+        :
+        this.returnDate;
       const range = this.selectedRange;
       const departureActive = this.checkifActive(DEPARTURE);
       const returnActive = this.checkifActive(RETURN);
       const rangeActive = this.checkifActive(RANGE);
+      if (this.selectedType === RETURN) {
+        rangeClicked = false;
+      }
+      if (this.selectedType === RANGE) {
+        returnClicked = false;
+      }
       return (
         <Container>
           <Content>
             <Heading size="small">Departure</Heading>
             <InputContainer
-              onClick={() => this.changeSelectedType(DEPARTURE)}
+              onClick={() => this.typeChanged(DEPARTURE)}
               active={departureActive}
+              clicked
             >
-              <Typography size="large">{getDateString(this.departureDate)}</Typography>
+              <Typography size="large">
+                {getDateString(this.departureDate)}
+              </Typography>
               {departureActive && start ?
                 <AnyTimeIcon
                   onClick={this.selectAnytime}
@@ -71,10 +102,12 @@ class Inputs extends Component<{}> {
           <Content>
             <Heading size="small">Return</Heading>
             <InputContainer
-              onClick={() => this.changeSelectedType(RETURN)}
-              active={returnActive}
+              onClick={() => this.typeChanged(RETURN)}
+              clicked={this.state.returnClicked}
             >
-              <Typography size="large">{getDateString(this.returnDate)}</Typography>
+              <Typography size="large" type={!returnClicked ? 'secondary' : 'attention'}>
+                {getDateString(this.returnDate)}
+              </Typography>
               {returnActive && start ?
                 <AnyTimeIcon
                   onClick={this.selectAnytime}
@@ -86,10 +119,12 @@ class Inputs extends Component<{}> {
           <Content>
             <Heading size="small">Trip length</Heading>
             <LengthContainer
-              onClick={() => this.changeSelectedType(RANGE)}
+              onClick={() => this.typeChanged(RANGE)}
               active={rangeActive}
             >
-              <Typography size="large">{range[0]} - {range[1]} nights</Typography>
+              <Typography size="large" type={!rangeClicked ? 'secondary' : 'attention'}>
+                {range[0]} - {range[1]} nights
+              </Typography>
             </LengthContainer>
           </Content>
         </Container>
