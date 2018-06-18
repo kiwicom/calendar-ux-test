@@ -81,10 +81,10 @@ export const DayContentContainer = styled.div`
     padding-top: 10px;
     border: solid 1px transparent;
     ${props => (props.isFirst ?
-    'border-top-left-radius: 3px;border-bottom-left-radius: 3px;' :
+    'border-top-left-radius: 3px;border-bottom-left-radius: 3px;cursor:ew-resize;' :
     '')}
     ${props => (props.isLast ?
-    'border-top-right-radius: 3px;border-bottom-right-radius: 3px;' :
+    'border-top-right-radius: 3px;border-bottom-right-radius: 3px;cursor:ew-resize;' :
     '')}
     ${props => (props.active ?
     'background-color:#0176d2;color: white;'
