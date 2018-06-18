@@ -105,7 +105,7 @@ export const DayDrag = styled.div`
     top: 50%;
     text-align:center;
     color: white;
-    cursor: pointer;
+    cursor:ew-resize;
     border-radius: 2px;
     ${props => (props.last ?
     'right: -5px;'

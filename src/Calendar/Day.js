@@ -70,11 +70,11 @@ class Day extends PureComponent<Props, State> {
     dragType = isFirst === 'true' ? 'start' : 'end';
   }
   addPreviousDay = (e: SyntheticMouseEvent<HTMLElement>) => {
-    e.preventDefault();
+    e.stopPropagation();
     this.changeDate('subtract');
   }
   addNextDay = (e: SyntheticMouseEvent<HTMLElement>) => {
-    e.preventDefault();
+    e.stopPropagation();
     this.changeDate('add');
   }
   render() {
@@ -127,20 +127,20 @@ class Day extends PureComponent<Props, State> {
                 active={active}
                 past={past}
               />
+              { !item.isToday && isFirstDay ? (
+                <DayDrag onClick={this.addPreviousDay}>
+                  <DragIcon src={LeftImg} />
+                </DayDrag>
+            ) : null}
+              {isLast ? (
+                <DayDrag
+                  last
+                  onClick={this.addNextDay}
+                >
+                  <DragIcon src={RightImg} />
+                </DayDrag>
+            ) : null}
             </DayContentContainer>
-            { !item.isToday && isFirstDay ? (
-              <DayDrag onClick={this.addPreviousDay}>
-                <DragIcon src={LeftImg} />
-              </DayDrag>
-            ) : null}
-            {isLast ? (
-              <DayDrag
-                last
-                onClick={this.addNextDay}
-              >
-                <DragIcon src={RightImg} />
-              </DayDrag>
-            ) : null}
           </DayContainer>
         );
       }}
